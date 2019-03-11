@@ -6,9 +6,6 @@
 # include <stdio.h>
 # include <unistd.h>
 
-# define TPART '#'
-# define TEMPTY '.'
-
 int				read_file(char *file);
 
 typedef struct	s_term

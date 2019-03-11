@@ -2,7 +2,7 @@
 
 static int		is_valid(int c, int i)
 {
-	if (c == TEMPTY || c == TPART
+	if (c == '.' || c == '#'
 		|| ((c == '\n') && ((i % 5 == 4) || (i == 20))))
 		return (1);
 	return (0);
@@ -15,15 +15,15 @@ static int		check_terminitos(char *buf, int i)
 	if (i == 19)
 		return (0);
 	count = 0;
-	if (buf[i] == TPART)
+	if (buf[i] == '#')
 	{
-		if (i > 0 && buf[i - 1] == TPART)
+		if (i > 0 && buf[i - 1] == '#')
 			count++;
-		if (i < 19 && buf[i + 1] == TPART)
+		if (i < 19 && buf[i + 1] == '#')
 			count++;
-		if (i >= 5 && buf[i - 5] == TPART)
+		if (i >= 5 && buf[i - 5] == '#')
 			count++;
-		if (i < 14 && buf[i + 5] == TPART)
+		if (i < 14 && buf[i + 5] == '#')
 			count++;
 	}
 	return (count + check_terminitos(buf, ++i));
@@ -40,7 +40,7 @@ static int		check_block(char *buf)
 	part = 0;
 	while (buf[i] && is_valid(buf[i], i) && part <= 4)
 	{
-		if (buf[i] == TPART)
+		if (buf[i] == '#')
 		{
 			part++;
 			if (part == 1)
