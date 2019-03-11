@@ -10,7 +10,7 @@ int				read_file(char *file);
 
 typedef struct	s_term
 {
-	char line[4][4];
+	char line[4][5];
 }				t_term;
 
 #endif
