@@ -9,6 +9,11 @@
 # define TPART '#'
 # define TEMPTY '.'
 
-int		read_file(char *file);
+int				read_file(char *file);
+
+typedef struct	s_term
+{
+	char line[4][4];
+}				t_term;
 
 #endif
