@@ -6,23 +6,9 @@
 # include <stdio.h>
 # include <unistd.h>
 
-typedef struct  s_piece
-{
-    int x;
-    int y;
-    int weidh;
-    int heigh;
-    char **map;
-    char letter;
-    struct s_piece *next;
-}               t_piece;
+# define TPART '#'
+# define TEMPTY '.'
 
-typedef struct  s_game
-{
-    t_piece *pieces;
-    int nb_pieces;
-    int size;
-    char **map;
-}               t_game;
+int		read_file(char *file);
 
 #endif
