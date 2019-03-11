@@ -18,7 +18,7 @@ int				main(int argc, char **argv)
 		return (0);
 	}
 	if (read_file(argv[1]))
-		printf("reading is ok\n");
+		printf("reading is finished\n");
 	else
 		printf("reading failed\n");
 
