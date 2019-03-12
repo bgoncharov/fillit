@@ -62,20 +62,16 @@ static int		check_block(char *buf)
 	return (0);
 }
 
-void	create_tetriminos(char *buf, int i)
+void	create_tetriminos(t_term	*tetriminos, char *buf, int i)
 {
-	t_term	tetriminos[10];
 	char	c = 'A';
 	int		x;
 	int		y;
 	
-	printf("buffer: \n%s", buf);
-	printf("tetriminos:\n");
-	x = -1;
+	x = 0;
 	c = c + i;
 	while (x < 4 && *buf)
 	{
-		x++;
 		y = 0;
 		while (y < 5 && *buf)
 		{
@@ -84,50 +80,63 @@ void	create_tetriminos(char *buf, int i)
 				tetriminos[i].line[x][y] = c;
 			else
 				tetriminos[i].line[x][y] = *buf;
-			//printf("%c", tetriminos[i].line[x][y]);
 			buf++;
 			y++;
 		}
 		tetriminos[i].line[x][y] = '\0';
-	}
-	x = 0;
-	while (x < 4)
-	{
-		y = 0;
-		while (y < 5)
-		{
-			printf("%c", tetriminos[i].line[x][y]);
-			y++;
-		}
 		x++;
 	}
-	printf("\n");
 }
 
-int		read_file(char *file)
+int		read_file(char *file, int fd)
 {
 	int	i;
-	int fd;
 	int ret;
 	int lastret;
 	char buf[255];
+	static t_term	tetriminos[26];
+	int		x;
+	int		y;
 
 	i = 0;
 	ret = 0;
 	lastret = 0;
 	if ((fd = open(file, O_RDONLY)) < 0)
-		printf("open error\n");
+	{
+		ft_putstr("Error\n");
+		return (0);
+	}
 	while ((ret = read(fd, buf, 21)) > 0)
 	{
 		lastret = ret;
 		buf[ret] = '\0';
-		if (ret >= 20 && check_block(buf))
+		if (ret >= 20 && check_block(buf) && i < 26)
 		{
-			create_tetriminos(buf, i);
+			create_tetriminos(tetriminos, buf, i);
 			i++;
 		}
 		else
-			printf("checking failed\n");
+		{
+			ft_putstr("Error\n");
+			return (0);
+		}
+	}
+	i--;
+	while (i >= 0)
+	{
+		x = 0;
+		while (x < 4)
+		{
+			y = 0;
+			while (y < 5)
+			{
+				printf("%c", tetriminos[i].line[x][y]);
+				y++;
+			}
+			x++;
+		}
+		i--;
+		printf("\n");
 	}
 	if (ret <= 0 && (lastret == 21 || !lastret))
 		printf("errore\n");
