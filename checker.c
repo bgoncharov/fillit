@@ -70,12 +70,12 @@ void	create_tetriminos(char *buf, int i)
 	int		y;
 	
 	printf("buffer: \n%s", buf);
-	printf("\ntetriminos:\n");
+	printf("tetriminos:\n");
 	x = -1;
+	c = c + i;
 	while (x < 4 && *buf)
 	{
 		x++;
-		//tetriminos[i].line[x] = (char *)malloc(sizeof(char) + 1);
 		y = 0;
 		while (y < 5 && *buf)
 		{
@@ -84,22 +84,19 @@ void	create_tetriminos(char *buf, int i)
 				tetriminos[i].line[x][y] = c;
 			else
 				tetriminos[i].line[x][y] = *buf;
+			//printf("%c", tetriminos[i].line[x][y]);
 			buf++;
 			y++;
-			//printf("%c", tetriminos[0].line[x][y]);
 		}
 		tetriminos[i].line[x][y] = '\0';
-		//x++;
 	}
-	//tetriminos[i].line[x][] = 0;
 	x = 0;
 	while (x < 4)
 	{
-		//printf("%s", tetriminos[0].line[x]);
 		y = 0;
 		while (y < 5)
 		{
-			printf("%c", tetriminos[0].line[x][y]);
+			printf("%c", tetriminos[i].line[x][y]);
 			y++;
 		}
 		x++;
