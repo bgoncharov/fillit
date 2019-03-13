@@ -53,7 +53,8 @@ void    solve_game(t_term	*tetriminos, int count)
     init_board(&board);
     print_board(&board);
     printf("\n");
-    while (i < 4)
+    
+    /*while (i < 4)
     {
         printf("first\n");
         j = 0;
@@ -71,6 +72,7 @@ void    solve_game(t_term	*tetriminos, int count)
             j++;
         }
         i++;
-    }
+    }*/
+
     print_board(&board);
 }
