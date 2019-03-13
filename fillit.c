@@ -39,86 +39,79 @@ void    print_board(t_board *board)
     }
 }
 
-int put_on_board(t_board *board, t_term *tetrmino)
+int put_on_board(t_board *board, t_term *tetriminos, int i)
 {
-    int i;
-    int j;
+    int x;//?
+    int y;
     int start;
 
-    j = 0;
+    y = 0;
     start = 1;
-    if (board->s[tetrmino->x][tetrmino->y] != '.' && tetrmino->line[0][0] != '.')
+    if (board->s[board->x][board->y] != '.' && tetriminos[i].line[0][0] != '.')
         return (0);
-    while (start && j < tetrmino->heigh)
+    while (start && y < tetriminos[i].height)
     {
-        i = 0;
-        while (start && i < tetrmino->width)
+        x = 0;
+        while (start && x < tetriminos[i].width)
         {
-            if (board->s[tetrmino->y + j][tetrmino->x + i] != '.'
-                && tetrmino->line[j][i] != '.')
+            if (board->s[board->y + y][board->x + x] != '.'
+                && tetriminos[i].line[y][x] != '.')
                 start = 0;
-            else if (board->s[tetrmino->y + j][tetrmino->x + i] == '.')
-                board->s[tetrmino->y + j][tetrmino->x + i] = tetrmino->line[j][i];
-            i = start ? i + 1 : i;
+            else if (board->s[board->y + y][board->x + x] == '.')
+                board->s[board->y + y][board->x + x] = tetriminos[i].line[y][x];
+            x = start ? x + 1 : x;
         }
-        j = start ? j + 1 : j;
+        y = start ? y + 1 : y;
     }
     if (start)
         return (1);
-    return (fake_func(board, tetrmino, i, j));
+    return (0);//fake_func(board, tetrmino, i, j));
 }
 
-int check_solve(t_board *board, t_term *tetrimino, int size, int count)
+int check_solve(t_board *board, t_term *tetriminos, int size, int i)
 {
-    int i;
+    int x;
+    int y;
 
-    if (!tetrimino)
-        return (0);
-    tetrimino->x = 0;
-    tetrimino->y = 0;
-    while (tetrimino->y + tetrimino->width <= size)
+   /* if (!tetrimino)
+        return (0); */
+    x = 0;
+    y = 0;
+    while (y + tetriminos[i].width <= size)
     {
-        i = 0;
-        while (tetrimino->x + tetrimino->width <= size)
+        x = 0;
+        while (x + tetriminos[i].width <= size)
         {
-            if (put_on_board(board, tetrimino))
+            if (put_on_board(board, tetriminos, i))
             {
-                if (check_solve(board, tetrimino[i]))
+                if (check_solve(board, tetriminos, size, ++i))
                     return (1);
-                else
-                    fake_func();
+                /*else
+                    fake_func();*/
             }
-            i++;
-            tetrimino->x++;
+            x++;
         }
-        tetrimino->y++;
+       y++;
     }
     return (0);
 }
 
 void    solve_game(t_term	*tetriminos, int count)
 {
-    t_board *board; //put pointer
+    t_board board;
     int     size;
-    int     i;
-    int     j;
-    //int     k;
 
     size = count * 4 / 2 + 1;
-    i = 0;
-    board->x = 0; //
     init_board(&board);
     print_board(&board);
     printf("\n");
 
-    while (!check_solve(board, tetriminos, size, count))
+    while (!check_solve(&board, tetriminos, size, count))
     {
         size++;
-        j = 0;
-        while (j < size);
-            /*....*/
+        init_board(&board);    
     }
-    
+    print_board(&board);
     /*while (i < 4)
     {
         j = 0;
@@ -137,5 +130,5 @@ void    solve_game(t_term	*tetriminos, int count)
         i++;
     }
 
-    print_board(&board);
+    print_board(&board);*/
 }
