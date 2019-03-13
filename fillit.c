@@ -61,17 +61,16 @@ void    solve_game(t_term	*tetriminos, int count)
         while (j < 4)
         {
             printf("second\n");
-            if (board.s[board.x][board.y] == '.' && tetriminos[0].line[i][j] == 'A')
+            if (board.s[board.x][board.y] == '.' && tetriminos[0].line[i][j] != '.')
             {
                 board.s[board.x][board.y] = tetriminos[0].line[i][j];
+                if (tetriminos[0].line[i][j + 1] == '.')
+                    board.x++;
                 board.y++;
             }
             j++;
         }
-        board.x++;
         i++;
     }
     print_board(&board);
-
-   // tetriminos[i].line[0][0] = '\0';
 }
