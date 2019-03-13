@@ -62,25 +62,50 @@ static int		check_block(char *buf)
 	return (0);
 }
 
+void		get_param(t_term	*tetriminos, char *buf, int i)
+{
+	int	j;
+	int	k;
+
+	j = 0;
+	k = 0;
+	tetriminos[i].width = 0;
+	tetriminos[i].height = 0;
+	while (j < 4)
+	{
+		if (buf[j] == '#' || buf[j + 5] == '#' || buf[j + 10] == '#' ||\
+				buf[j + 15] == '#')
+			tetriminos[i].width++;
+		j++;
+	}
+	while (k < 19)
+	{
+		if (buf[k] == '#' || buf[k + 1] == '#' || buf[k + 2] == '#' || buf[k + 3] == '#')
+					tetriminos[i].height++;
+		k = k + 5;
+	}
+}
+
 void	create_tetriminos(t_term	*tetriminos, char *buf, int i)
 {
 	char	c = 'A';
 	int		x;
 	int		y;
+	int		j;
 	
 	x = 0;
+	j = 0;
 	c = c + i;
-	while (x < 4 && *buf)
+	while (x < 4 && buf[j] != '\0')
 	{
 		y = 0;
-		while (y < 5 && *buf)
+		while (y < 5 && buf[j] != '\0')
 		{
-			
-			if (*buf == '#')
+			if (buf[j] == '#')
 				tetriminos[i].line[x][y] = c;
 			else
-				tetriminos[i].line[x][y] = *buf;
-			buf++;
+				tetriminos[i].line[x][y] = buf[j];
+			j++;
 			y++;
 		}
 		tetriminos[i].line[x][y] = '\0';
@@ -113,6 +138,7 @@ int		read_file(char *file, int fd)
 		if (ret >= 20 && check_block(buf) && i < 26)
 		{
 			create_tetriminos(tetriminos, buf, i);
+			get_param(tetriminos, buf, i);
 			i++;
 		}
 		else
@@ -125,6 +151,8 @@ int		read_file(char *file, int fd)
 	while (i >= 0)
 	{
 		x = 0;
+		printf("width: %d\n", (int)tetriminos[i].width);
+		printf("height: %d\n", (int)tetriminos[i].height);
 		while (x < 4)
 		{
 			y = 0;
@@ -140,6 +168,6 @@ int		read_file(char *file, int fd)
 	}
 	solve_game(tetriminos, i);
 	if (ret <= 0 && (lastret == 21 || !lastret))
-		printf("errore\n");
+		ft_putstr("Error\n");
 	return (1);
 }

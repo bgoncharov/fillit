@@ -10,10 +10,10 @@ int				main(int argc, char **argv)
 		printf("error in main\n");
 		return (0);
 	}
-	if (read_file(argv[1], fd))
-		printf("reading is ok\n");
-	else
-		printf("reading failed\n");
+	if (!read_file(argv[1], fd))
+	//	printf("reading is ok\n");
+	//else
+		ft_putstr("Error\n");
 
 	return (0);
 }

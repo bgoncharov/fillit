@@ -53,15 +53,13 @@ void    solve_game(t_term	*tetriminos, int count)
     init_board(&board);
     print_board(&board);
     printf("\n");
-    
-    /*while (i < 4)
+
+    while (i < 4)
     {
-        printf("first\n");
         j = 0;
         board.y = 0;
         while (j < 4)
         {
-            printf("second\n");
             if (board.s[board.x][board.y] == '.' && tetriminos[0].line[i][j] != '.')
             {
                 board.s[board.x][board.y] = tetriminos[0].line[i][j];
@@ -72,7 +70,7 @@ void    solve_game(t_term	*tetriminos, int count)
             j++;
         }
         i++;
-    }*/
+    }
 
     print_board(&board);
 }
