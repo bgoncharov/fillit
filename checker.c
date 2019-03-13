@@ -138,6 +138,7 @@ int		read_file(char *file, int fd)
 		i--;
 		printf("\n");
 	}
+	solve_game(tetriminos, i);
 	if (ret <= 0 && (lastret == 21 || !lastret))
 		printf("errore\n");
 	return (1);

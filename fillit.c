@@ -1,9 +1,8 @@
 #include "fillit.h"
+#include <stdio.h>
 
-void    solve_game(t_term	*tetriminos, int i)
+void    init_board(t_board *board)
 {
-    t_board board;
-    int     size;
     int     j;
     int     k;
 
@@ -11,12 +10,68 @@ void    solve_game(t_term	*tetriminos, int i)
     while (j < 12)
     {
         k = 0;
-        while (k < 13)
+        while (k < 12)
         {
-            board.s[j][k] = '.';
+            board->s[j][k] = '.';
             k++;
         }
-        board.s[j][k] = '\0';
+        board->s[j][k] = '\n';
+        board->s[j][k + 1] = '\0';
         j++;
     }
+}
+
+void    print_board(t_board *board)
+{
+    int     j;
+    int     k;
+
+    j = 0;
+    while (j < 12)
+    {
+        k = 0;
+        while (k <= 12)
+        {
+            printf("%c", board->s[j][k]);
+            k++;
+        }
+        j++;
+    }
+}
+
+void    solve_game(t_term	*tetriminos, int count)
+{
+    t_board board;
+    int     size;
+    int     i;
+    int     j;
+    //int     k;
+
+    size = count * 4 / 2 + 1;
+    i = 0;
+    board.x = 0;
+    init_board(&board);
+    print_board(&board);
+    printf("\n");
+    while (i < 4)
+    {
+        printf("first\n");
+        j = 0;
+        board.y = 0;
+        while (j < 4)
+        {
+            printf("second\n");
+            if (board.s[board.x][board.y] == '.' && tetriminos[0].line[i][j] == 'A')
+            {
+                board.s[board.x][board.y] = tetriminos[0].line[i][j];
+                board.y++;
+            }
+            j++;
+        }
+        board.x++;
+        i++;
+    }
+    print_board(&board);
+
+   // tetriminos[i].line[0][0] = '\0';
 }
