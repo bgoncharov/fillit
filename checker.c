@@ -120,10 +120,10 @@ int		read_file(char *file, int fd)
 	int lastret;
 	char buf[255];
 	static t_term	tetriminos[26];
-	int		x;
-	int		y;
+	//int		x;
+	//int		y;
 
-	i = 0;
+	i = -1;
 	ret = 0;
 	lastret = 0;
 	if ((fd = open(file, O_RDONLY)) < 0)
@@ -137,9 +137,9 @@ int		read_file(char *file, int fd)
 		buf[ret] = '\0';
 		if (ret >= 20 && check_block(buf) && i < 26)
 		{
+			i++;
 			create_tetriminos(tetriminos, buf, i);
 			get_param(tetriminos, buf, i);
-			i++;
 		}
 		else
 		{
@@ -147,7 +147,7 @@ int		read_file(char *file, int fd)
 			return (0);
 		}
 	}
-	i--;
+	/*i--;
 	while (i >= 0)
 	{
 		x = 0;
@@ -165,7 +165,7 @@ int		read_file(char *file, int fd)
 		}
 		i--;
 		printf("\n");
-	}
+	} */
 	solve_game(tetriminos, i);
 	if (ret <= 0 && (lastret == 21 || !lastret))
 		ft_putstr("Error\n");
