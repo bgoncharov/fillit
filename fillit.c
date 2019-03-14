@@ -47,7 +47,9 @@ int put_on_board(t_board *board, t_term *tetriminos, int id)
 
     y = 0;
     start = 1;
-    if (board->s[board->x][board->y] != '.' && tetriminos[id].line[0][0] != '.')
+    board->x = 0;
+    board->y = 0;
+    if (board->s[board->y][board->x] != '.' && tetriminos[id].line[0][0] != '.')
         return (0);
     while (start && y < tetriminos[id].height)
     {
@@ -68,23 +70,26 @@ int put_on_board(t_board *board, t_term *tetriminos, int id)
     return (0);//fake_func(board, tetrmino, i, j));
 }
 
-int check_solve(t_board *board, t_term *tetriminos, int size, int id)
+int check_solve(t_board *board, t_term *tetriminos, int size, int id, int count)
 {
     int x;
     int y;
+    
 
    /* if (!tetrimino)
         return (0); */
     x = 0;
     y = 0;
-    while (y + tetriminos[id].width <= size)
+    //printf("id = %d\n", id);
+    while (y + tetriminos[id].height <= size && id < count)
     {
         x = 0;
-        while (x + tetriminos[id].width <= size)
+        while (x + tetriminos[id].width <= size && id < count)
         {
             if (put_on_board(board, tetriminos, id))
             {
-                if (id < 26 && check_solve(board, tetriminos, size, ++id))
+                id++;
+                if (check_solve(board, tetriminos, size, id, count))
                     return (1);
                 /*else
                     fake_func();*/
@@ -100,13 +105,21 @@ void    solve_game(t_term	*tetriminos, int id)
 {
     t_board board;
     int     size;
+    int     h;
+    int     w;
+    int     count;
 
     printf("id = %d\n", id);
+    count = id + 1;
     size = (id + 1) * 4 / 2 + 1;
     init_board(&board);
     print_board(&board);
     printf("\n");
-    while (!check_solve(&board, tetriminos, size, id) && size <= 12)
+    h = tetriminos[id].height;
+    w = tetriminos[id].width;
+
+
+    while (!check_solve(&board, tetriminos, size, id, count) && size <= 12)
     {
         printf("size = %d\n", size);
         size++;
