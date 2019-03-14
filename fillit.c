@@ -39,6 +39,29 @@ void    print_board(t_board *board)
     }
 }
 
+int revert_board(t_board *board, t_term *tetriminos, int w, int h, int id)
+{
+    int i;
+    int j;
+
+    j = 0;
+    if (h > 0)
+        w = tetriminos->width -1;
+    while (j <= w)
+    {
+        i = 0;
+        while (i <= w)
+        {
+            if (board->s[tetriminos[id].height + j][tetriminos[id].width + i] == 
+                tetriminos[id].line[j][i])
+                board->s[tetriminos[id].height + j][tetriminos[id].width + i] = '.';
+            i++;
+        }
+        j++;
+    }
+    return (0);
+}
+
 int put_on_board(t_board *board, t_term *tetriminos, int id, int x, int y)
 {
     int i;//?
@@ -71,7 +94,7 @@ int put_on_board(t_board *board, t_term *tetriminos, int id, int x, int y)
     }
     if (start)
         return (1);
-    return (0);//fake_func(board, tetrmino, i, j));
+    return (revert_board(board, tetriminos, i, j, id)); // return (0);
 }
 
 int check_solve(t_board *board, t_term *tetriminos, int size, int id, int count)
@@ -96,8 +119,8 @@ int check_solve(t_board *board, t_term *tetriminos, int size, int id, int count)
                 id++;
                 if (check_solve(board, tetriminos, size, id, count))
                     return (1);
-                /*else
-                    fake_func();*/
+                else
+                    revert_board(board, tetriminos, tetriminos->width - 1, tetriminos->height - 1, id);
             }
             x++;
         }
