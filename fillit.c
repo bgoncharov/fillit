@@ -39,7 +39,7 @@ void    print_board(t_board *board)
     }
 }
 
-int put_on_board(t_board *board, t_term *tetriminos, int i)
+int put_on_board(t_board *board, t_term *tetriminos, int id)
 {
     int x;//?
     int y;
@@ -47,18 +47,18 @@ int put_on_board(t_board *board, t_term *tetriminos, int i)
 
     y = 0;
     start = 1;
-    if (board->s[board->x][board->y] != '.' && tetriminos[i].line[0][0] != '.')
+    if (board->s[board->x][board->y] != '.' && tetriminos[id].line[0][0] != '.')
         return (0);
-    while (start && y < tetriminos[i].height)
+    while (start && y < tetriminos[id].height)
     {
         x = 0;
-        while (start && x < tetriminos[i].width)
+        while (start && x < tetriminos[id].width)
         {
             if (board->s[board->y + y][board->x + x] != '.'
-                && tetriminos[i].line[y][x] != '.')
+                && tetriminos[id].line[y][x] != '.')
                 start = 0;
             else if (board->s[board->y + y][board->x + x] == '.')
-                board->s[board->y + y][board->x + x] = tetriminos[i].line[y][x];
+                board->s[board->y + y][board->x + x] = tetriminos[id].line[y][x];
             x = start ? x + 1 : x;
         }
         y = start ? y + 1 : y;
