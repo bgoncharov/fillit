@@ -50,10 +50,10 @@ int put_on_board(t_board *board, t_term *tetriminos, int id, int x, int y)
 
     if (board->s[y][x] != '.' && tetriminos[id].line[0][0] != '.')
         return (0);
-    while (start && j < tetriminos[id].height)
+    while (start && j <= tetriminos[id].height)
     {
         i = 0;
-        while (start && i < tetriminos[id].width)
+        while (start && i <= tetriminos[id].width)
         {
             if (board->s[y + j][x + i] != '.'
                 && tetriminos[id].line[j][i] != '.')
@@ -61,13 +61,14 @@ int put_on_board(t_board *board, t_term *tetriminos, int id, int x, int y)
             else if (board->s[y + j][x + i] == '.')
             {
                 board->s[y + j][x + i] = tetriminos[id].line[j][i];
-                printf("%c", board->s[y + j][x + i]);
+               // printf("%c\n", board->s[y + j][x + i]);
             }
-            i = (start) ? i + 1 : i;
+            if (start) 
+                i++;
         }
-        j = (start) ? j + 1 : j;
+        if (start) 
+            j++;
     }
-    printf("\n");
     if (start)
         return (1);
     return (0);//fake_func(board, tetrmino, i, j));
@@ -83,7 +84,6 @@ int check_solve(t_board *board, t_term *tetriminos, int size, int id, int count)
         return (0); */
     x = 0;
     y = 0;
-    //printf("id = %d\n", id);
     while (y + tetriminos[id].height <= size && id < count)
     {
         x = 0;
@@ -110,8 +110,6 @@ void    solve_game(t_term	*tetriminos, int id)
 {
     t_board board;
     int     size;
-    int     h;
-    int     w;
     int     count;
 
     printf("id = %d\n", id);
@@ -120,13 +118,10 @@ void    solve_game(t_term	*tetriminos, int id)
     init_board(&board);
     print_board(&board);
     printf("\n");
-    h = tetriminos[id].height;
-    w = tetriminos[id].width;
-
-
+    printf("size = %d\n", size);
     while (!check_solve(&board, tetriminos, size, id, count) && size <= 12)
     {
-        printf("size = %d\n", size);
+        
         size++;
         init_board(&board);    
     }
