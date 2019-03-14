@@ -39,32 +39,35 @@ void    print_board(t_board *board)
     }
 }
 
-int put_on_board(t_board *board, t_term *tetriminos, int id)
+int put_on_board(t_board *board, t_term *tetriminos, int id, int x, int y)
 {
-    int x;//?
-    int y;
+    int i;//?
+    int j;
     int start;
 
-    y = 0;
+    j = 0;
     start = 1;
-    board->x = 0;
-    board->y = 0;
-    if (board->s[board->y][board->x] != '.' && tetriminos[id].line[0][0] != '.')
+
+    if (board->s[y][x] != '.' && tetriminos[id].line[0][0] != '.')
         return (0);
-    while (start && y < tetriminos[id].height)
+    while (start && j < tetriminos[id].height)
     {
-        x = 0;
-        while (start && x < tetriminos[id].width)
+        i = 0;
+        while (start && i < tetriminos[id].width)
         {
-            if (board->s[board->y + y][board->x + x] != '.'
-                && tetriminos[id].line[y][x] != '.')
+            if (board->s[y + j][x + i] != '.'
+                && tetriminos[id].line[j][i] != '.')
                 start = 0;
-            else if (board->s[board->y + y][board->x + x] == '.')
-                board->s[board->y + y][board->x + x] = tetriminos[id].line[y][x];
-            x = start ? x + 1 : x;
+            else if (board->s[y + j][x + i] == '.')
+            {
+                board->s[y + j][x + i] = tetriminos[id].line[j][i];
+                printf("%c", board->s[y + j][x + i]);
+            }
+            i = (start) ? i + 1 : i;
         }
-        y = start ? y + 1 : y;
+        j = (start) ? j + 1 : j;
     }
+    printf("\n");
     if (start)
         return (1);
     return (0);//fake_func(board, tetrmino, i, j));
@@ -86,8 +89,10 @@ int check_solve(t_board *board, t_term *tetriminos, int size, int id, int count)
         x = 0;
         while (x + tetriminos[id].width <= size && id < count)
         {
-            if (put_on_board(board, tetriminos, id))
+            if (put_on_board(board, tetriminos, id, x, y))
             {
+                if (id == count - 1)
+                    return (1);
                 id++;
                 if (check_solve(board, tetriminos, size, id, count))
                     return (1);
