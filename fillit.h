@@ -10,6 +10,8 @@ int				read_file(char *file, int fd);
 
 typedef struct	s_term
 {
+	int		x;
+	int		y;
 	int		height;
 	int		width;
 	char	line[4][6];
