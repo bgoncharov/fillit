@@ -86,6 +86,73 @@ void		get_param(t_term	*tetriminos, char *buf, int i)
 	}
 }
 
+void	change_buf(t_term	*tetriminos, int  id)
+{
+	int x;
+	int y;
+	int	f1;
+	int f2;
+	
+	id--;
+	tetriminos[id].x = 0;
+	x = 0;
+	y = 0;
+	f1 = 0;
+	f2 = 0;
+	while (tetriminos[id].x  < 4)
+	{
+		tetriminos[id].y = 0;
+		while (tetriminos[id].y < 4)
+		{
+			if (tetriminos[id].line[tetriminos[id].x][tetriminos[id].y] != '.' && tetriminos[id].x > x && f1 == 0)
+			{
+				x = tetriminos[id].x;
+				f1++;
+			}
+			if (tetriminos[id].line[tetriminos[id].x][tetriminos[id].y] != '.' && tetriminos[id].y > y && f2 == 0)
+			{
+				y = tetriminos[id].y;
+				f2++;
+			}
+
+			tetriminos[id].y++;
+		}
+		tetriminos[id].x++;
+	}
+	printf("x = %d\n", x);
+	printf("y = %d\n", y);
+	tetriminos[id].x = 0;
+	while (tetriminos[id].x < 4)
+	{
+		tetriminos[id].y = 0;
+		while (tetriminos[id].y < 4)
+		{
+			if (tetriminos[id].line[tetriminos[id].x][tetriminos[id].y] != '.')
+			{
+				tetriminos[id].line[tetriminos[id].x][tetriminos[id].y - y] = tetriminos[id].line[tetriminos[id].x][tetriminos[id].y];
+				tetriminos[id].line[tetriminos[id].x][tetriminos[id].y] = '.';
+			}
+			tetriminos[id].y++;
+		}
+		tetriminos[id].x++;
+	}
+	tetriminos[id].x = 0;
+	while (tetriminos[id].x < 4)
+	{
+		tetriminos[id].y = 0;
+		while (tetriminos[id].y < 4)
+		{
+			if (tetriminos[id].line[tetriminos[id].x][tetriminos[id].y] != '.')
+			{
+				tetriminos[id].line[tetriminos[id].x - x][tetriminos[id].y] = tetriminos[id].line[tetriminos[id].x][tetriminos[id].y];
+				tetriminos[id].line[tetriminos[id].x][tetriminos[id].y] = '.';
+			}
+			tetriminos[id].y++;
+		}
+		tetriminos[id].x++;
+	}
+}
+
 void	create_tetriminos(t_term	*tetriminos, char *buf, int i)
 {
 	char	c = 'A';
@@ -147,6 +214,7 @@ int		read_file(char *file, int fd)
 			return (0);
 		}
 	}
+	change_buf(tetriminos, i);
 	/*i--;
 	while (i >= 0)
 	{
