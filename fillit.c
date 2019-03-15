@@ -39,7 +39,7 @@ void    print_board(t_board *board)
     }
 }
 
-/*int revert_board(t_board *board, t_term *tetriminos, int w, int h, int id)
+int revert_board(t_board *board, t_term *tetriminos, int w, int h, int id)
 {
     int i;
     int j;
@@ -59,7 +59,7 @@ void    print_board(t_board *board)
         j++;
     }
     return (0);
-}*/
+}
 
 int put_on_board(t_board *board, t_term *tetriminos, int id)
 {
