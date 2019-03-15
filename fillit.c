@@ -39,7 +39,7 @@ void    print_board(t_board *board)
     }
 }
 
-/*int revert_board(t_board *board, t_term *tetriminos, int w, int h, int id)
+int revert_board(t_board *board, t_term *tetriminos, int w, int h, int id)
 {
     int i;
     int j;
@@ -59,7 +59,7 @@ void    print_board(t_board *board)
         j++;
     }
     return (0);
-}*/
+}
 
 int put_on_board(t_board *board, t_term *tetriminos, int id)
 {
@@ -93,7 +93,7 @@ int put_on_board(t_board *board, t_term *tetriminos, int id)
    // printf("\n");
     if (start)
         return (1);
-    return (0);//revert_board(board, tetriminos, i, j, id)); // return (0);
+    return (revert_board(board, tetriminos, i, j, id)); // return (0);
 }
 
 int check_solve(t_board *board, t_term *tetriminos, int size, int id, int count)
@@ -117,8 +117,8 @@ int check_solve(t_board *board, t_term *tetriminos, int size, int id, int count)
                 id++;
                 if (check_solve(board, tetriminos, size, id, count))
                     return (1);
-               /* else
-                    revert_board(board, tetriminos, tetriminos[id].width - 1, tetriminos[id].height - 1, id);*/
+                else
+                    revert_board(board, tetriminos, tetriminos[id].width - 1, tetriminos[id].height - 1, id);
             }
             tetriminos[id].x++;
         }
@@ -133,7 +133,6 @@ void    solve_game(t_term	*tetriminos, int id)
     int     size;
     int     count;
 
-    printf("id = %d\n", id);
     count = id + 1;
     size = id * 4 / 2 + 1;
     init_board(&board);
