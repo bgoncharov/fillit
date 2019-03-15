@@ -89,8 +89,8 @@ int put_on_board(t_board *board, t_term *tetriminos, int id)
         if (start) 
             j++;
     }
-    print_board(board);
-    printf("\n");
+   // print_board(board);
+   // printf("\n");
     if (start)
         return (1);
     return (0);//revert_board(board, tetriminos, i, j, id)); // return (0);
@@ -102,9 +102,9 @@ int check_solve(t_board *board, t_term *tetriminos, int size, int id, int count)
         return (0); */
     tetriminos[id].x = 0;
     tetriminos[id].y = 0;
-    printf("height = %d\n", tetriminos[id].height);
-    printf("width = %d\n", tetriminos[id].width);
-    printf("size = %d\n", size);
+    //printf("height = %d\n", tetriminos[id].height);
+   // printf("width = %d\n", tetriminos[id].width);
+   // printf("size = %d\n", size);
     while (tetriminos[id].y + tetriminos[id].height <= size && id < count)
     {
         tetriminos[id].x = 0;
@@ -145,7 +145,7 @@ void    solve_game(t_term	*tetriminos, int id)
         size++;
         init_board(&board);    
     }
-    //print_board(&board);
+    print_board(&board);
     /*while (i < 4)
     {
         j = 0;
