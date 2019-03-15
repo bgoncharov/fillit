@@ -122,9 +122,6 @@ void	move_tet(t_term	*tetriminos, int  id)
 		}
 		tetriminos[id].x++;
 	}
-	printf("id = %d\n", id);
-	printf("x = %d\n", x);
-	printf("y = %d\n\n", y);
 	tetriminos[id].x = 0;
 	while (tetriminos[id].x < 4 && x > 0)
 	{
@@ -191,8 +188,6 @@ int		read_file(char *file, int fd)
 	int lastret;
 	char buf[255];
 	static t_term	tetriminos[26];
-	//int		x;
-	//int		y;
 
 	i = -1;
 	ret = 0;
@@ -223,8 +218,6 @@ int		read_file(char *file, int fd)
 	while (i >= 0)
 	{
 		x = 0;
-		printf("width: %d\n", (int)tetriminos[i].width);
-		printf("height: %d\n", (int)tetriminos[i].height);
 		while (x < 4)
 		{
 			y = 0;
