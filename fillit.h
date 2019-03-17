@@ -24,6 +24,6 @@ typedef struct	s_board
 	char s[12][13];
 }				t_board;
 
-void    solve_game(t_term	*tetriminos, int i);
+void    solve_game(t_term	*tet, int i);
 
 #endif

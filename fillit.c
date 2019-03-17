@@ -50,21 +50,21 @@ void    print_board(t_board *board, int size)
     }
 }
 
-int revert_board(t_board *board, t_term *tetriminos, int w, int h, int id)
+int revert_board(t_board *board, t_term *tet, int w, int h, int id)
 {
     int i;
     int j;
 
     j = 0;
     if (h > 0)
-        w = tetriminos[id].width - 1;
+        w = tet[id].width - 1;
     while (j <= w)
     {
         i = 0;
         while (i <= w)
         {
-            if (board->s[tetriminos[id].y + j][tetriminos[id].x + i] == tetriminos[id].line[j][i])
-                board->s[tetriminos[id].y + j][tetriminos[id].x + i] = '.';
+            if (board->s[tet[id].y + j][tet[id].x + i] == tet[id].line[j][i])
+                board->s[tet[id].y + j][tet[id].x + i] = '.';
             i++;
         }
         j++;
@@ -72,7 +72,7 @@ int revert_board(t_board *board, t_term *tetriminos, int w, int h, int id)
     return (0);
 }
 
-int put_on_board(t_board *board, t_term *tetriminos, int id)
+int put_on_board(t_board *board, t_term *tet, int id)
 {
     int i;
     int j;
@@ -80,18 +80,18 @@ int put_on_board(t_board *board, t_term *tetriminos, int id)
 
     j = 0;
     start = 1;
-    if (board->s[tetriminos[id].y][tetriminos[id].x] != '.' && tetriminos[id].line[0][0] != '.')
+    if (board->s[tet[id].y][tet[id].x] != '.' && tet[id].line[0][0] != '.')
         return (0);
-    while (start && j <= tetriminos[id].height)
+    while (start && j <= tet[id].height)
     {
         i = 0;
-        while (start && i <= tetriminos[id].width)
+        while (start && i <= tet[id].width)
         {
-            if (board->s[tetriminos[id].y + j][tetriminos[id].x + i] != '.' && tetriminos[id].line[j][i] != '.')
+            if (board->s[tet[id].y + j][tet[id].x + i] != '.' && tet[id].line[j][i] != '.')
                 start = 0;
-            else if (board->s[tetriminos[id].y + j][tetriminos[id].x + i] == '.')
+            else if (board->s[tet[id].y + j][tet[id].x + i] == '.')
             {
-                board->s[tetriminos[id].y + j][tetriminos[id].x + i] = tetriminos[id].line[j][i];
+                board->s[tet[id].y + j][tet[id].x + i] = tet[id].line[j][i];
             }
             if (start) 
                 i++;
@@ -101,38 +101,38 @@ int put_on_board(t_board *board, t_term *tetriminos, int id)
     }
     if (start)
         return (1);
-    return (revert_board(board, tetriminos, i, j, id));
+    return (revert_board(board, tet, i, j, id));
 }
 
-int check_solve(t_board *board, t_term *tetriminos, int size, int id, int count)
+int check_solve(t_board *board, t_term *tet, int size, int id, int count)
 {
    /* if (!tetrimino)
         return (0); */
-    tetriminos[id].x = 0;
-    tetriminos[id].y = 0;
-    while (tetriminos[id].y + tetriminos[id].height <= size && id < count)
+    tet[id].x = 0;
+    tet[id].y = 0;
+    while (tet[id].y + tet[id].height <= size && id < count)
     {
-        tetriminos[id].x = 0;
-        while (tetriminos[id].x + tetriminos[id].width <= size && id < count)
+        tet[id].x = 0;
+        while (tet[id].x + tet[id].width <= size && id < count)
         {
-            if (put_on_board(board, tetriminos, id))
+            if (put_on_board(board, tet, id))
             {
                 if (id == count - 1)
                     return (1);
                 id++;
-                if (check_solve(board, tetriminos, size, id, count))
+                if (check_solve(board, tet, size, id, count))
                     return (1);
                 else
-                    revert_board(board, tetriminos, tetriminos[id].width - 1, tetriminos[id].height - 1, id);
+                    revert_board(board, tet, tet[id].width - 1, tet[id].height - 1, id);
             }
-            tetriminos[id].x++;
+            tet[id].x++;
         }
-       tetriminos[id].y++;
+       tet[id].y++;
     }
     return (0);
 }
 
-void    solve_game(t_term	*tetriminos, int id)
+void    solve_game(t_term	*tet, int id)
 {
     t_board board;
     int     size;
@@ -144,7 +144,7 @@ void    solve_game(t_term	*tetriminos, int id)
     printf("size = %d\n", size);
     print_board(&board, size);
     printf("\n");
-    while (!check_solve(&board, tetriminos, size, id, count) && size <= 12)
+    while (!check_solve(&board, tet, size, id, count) && size <= 12)
     {
         size++;
         init_board(&board);    

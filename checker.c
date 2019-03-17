@@ -8,7 +8,7 @@ static int		is_valid(int c, int i)
 	return (0);
 }
 
-static int		check_terminitos(char *buf, int i)
+static int		check_tet(char *buf, int i)
 {
 	int count;
 
@@ -26,7 +26,7 @@ static int		check_terminitos(char *buf, int i)
 		if (i < 14 && buf[i + 5] == '#')
 			count++;
 	}
-	return (count + check_terminitos(buf, ++i));
+	return (count + check_tet(buf, ++i));
 }
 
 static int		check_block(char *buf)
@@ -50,7 +50,7 @@ static int		check_block(char *buf)
 	}
 	if (i >= 20 && !buf[i] && part == 4)
 	{
-		res = check_terminitos(buf, start);
+		res = check_tet(buf, start);
 		if (res == 6 || res == 8)
 		{
 			//printf("check is OK\n");
@@ -62,99 +62,99 @@ static int		check_block(char *buf)
 	return (0);
 }
 
-void		get_param(t_term	*tetriminos, char *buf, int i)
+void		get_param(t_term	*tet, char *buf, int i)
 {
 	int	j;
 	int	k;
 
 	j = 0;
 	k = 0;
-	tetriminos[i].width = 0;
-	tetriminos[i].height = 0;
+	tet[i].width = 0;
+	tet[i].height = 0;
 	while (j < 4)
 	{
 		if (buf[j] == '#' || buf[j + 5] == '#' || buf[j + 10] == '#' ||\
 				buf[j + 15] == '#')
-			tetriminos[i].width++;
+			tet[i].width++;
 		j++;
 	}
 	while (k < 19)
 	{
 		if (buf[k] == '#' || buf[k + 1] == '#' || buf[k + 2] == '#' || buf[k + 3] == '#')
-					tetriminos[i].height++;
+					tet[i].height++;
 		k = k + 5;
 	}
 }
 
-void	move_tet(t_term	*tetriminos, int  id)
+void	move_tet(t_term	*tet, int  id)
 {
 	int x;
 	int y;
 	int	f1;
 	int f2;
 	
-	tetriminos[id].x = 0;
+	tet[id].x = 0;
 	x = 0;
 	y = 0;
 	f1 = 0;
 	f2 = 0;
-	while (tetriminos[id].x  < 4)
+	while (tet[id].x  < 4)
 	{
-		tetriminos[id].y = 0;
-		while (tetriminos[id].y < 4)
+		tet[id].y = 0;
+		while (tet[id].y < 4)
 		{
-			if (tetriminos[id].line[tetriminos[id].x][tetriminos[id].y] != '.')
+			if (tet[id].line[tet[id].x][tet[id].y] != '.')
 			{
-				if (tetriminos[id].x >= x && f1 == 0)
+				if (tet[id].x >= x && f1 == 0)
 				{
-					x = tetriminos[id].x;
+					x = tet[id].x;
 					f1++;
 				}
-				if (tetriminos[id].y >= y && f2 == 0)
+				if (tet[id].y >= y && f2 == 0)
 				{
-					y = tetriminos[id].y;
+					y = tet[id].y;
 					f2++;
 				}
-				if (f2 != 0 && tetriminos[id].y < y)
-					y = tetriminos[id].y;
+				if (f2 != 0 && tet[id].y < y)
+					y = tet[id].y;
 			}
-			tetriminos[id].y++;
+			tet[id].y++;
 		}
-		tetriminos[id].x++;
+		tet[id].x++;
 	}
-	tetriminos[id].x = 0;
-	while (tetriminos[id].x < 4 && x > 0)
+	tet[id].x = 0;
+	while (tet[id].x < 4 && x > 0)
 	{
-		tetriminos[id].y = 0;
-		while (tetriminos[id].y < 4)
+		tet[id].y = 0;
+		while (tet[id].y < 4)
 		{
-			if (tetriminos[id].line[tetriminos[id].x][tetriminos[id].y] != '.')
+			if (tet[id].line[tet[id].x][tet[id].y] != '.')
 			{
-				tetriminos[id].line[tetriminos[id].x - x][tetriminos[id].y] = tetriminos[id].line[tetriminos[id].x][tetriminos[id].y];
-				tetriminos[id].line[tetriminos[id].x][tetriminos[id].y] = '.';
+				tet[id].line[tet[id].x - x][tet[id].y] = tet[id].line[tet[id].x][tet[id].y];
+				tet[id].line[tet[id].x][tet[id].y] = '.';
 			}
-			tetriminos[id].y++;
+			tet[id].y++;
 		}
-		tetriminos[id].x++;
+		tet[id].x++;
 	}
-	tetriminos[id].x = 0;
-	while (tetriminos[id].x < 4 && y > 0)
+	tet[id].x = 0;
+	while (tet[id].x < 4 && y > 0)
 	{
-		tetriminos[id].y = 0;
-		while (tetriminos[id].y < 4)
+		tet[id].y = 0;
+		while (tet[id].y < 4)
 		{
-			if (tetriminos[id].line[tetriminos[id].x][tetriminos[id].y] != '.')
+			if (tet[id].line[tet[id].x][tet[id].y] != '.')
 			{
-				tetriminos[id].line[tetriminos[id].x][tetriminos[id].y - y] = tetriminos[id].line[tetriminos[id].x][tetriminos[id].y];
-				tetriminos[id].line[tetriminos[id].x][tetriminos[id].y] = '.';
+				tet[id].line[tet[id].x][tet[id].y - y] = tet[id].line[tet[id].x][tet[id].y];
+				tet[id].line[tet[id].x][tet[id].y] = '.';
 			}
-			tetriminos[id].y++;
+			tet[id].y++;
 		}
-		tetriminos[id].x++;
+		tet[id].x++;
 	}
 }
 
-void	create_tetriminos(t_term	*tetriminos, char *buf, int i)
+void	create_tet(t_term	*tet, char *buf, int i)
 {
 	char	c = 'A';
 	int		x;
@@ -170,13 +170,13 @@ void	create_tetriminos(t_term	*tetriminos, char *buf, int i)
 		while (y < 5 && buf[j] != '\0')
 		{
 			if (buf[j] == '#')
-				tetriminos[i].line[x][y] = c;
+				tet[i].line[x][y] = c;
 			else
-				tetriminos[i].line[x][y] = buf[j];
+				tet[i].line[x][y] = buf[j];
 			j++;
 			y++;
 		}
-		tetriminos[i].line[x][y] = '\0';
+		tet[i].line[x][y] = '\0';
 		x++;
 	}
 }
@@ -187,7 +187,7 @@ int		read_file(char *file, int fd)
 	int ret;
 	int lastret;
 	char buf[255];
-	static t_term	tetriminos[26];
+	static t_term	tet[26];
 
 	i = -1;
 	ret = 0;
@@ -204,9 +204,9 @@ int		read_file(char *file, int fd)
 		if (ret >= 20 && check_block(buf) && i < 26)
 		{
 			i++;
-			create_tetriminos(tetriminos, buf, i);
-			get_param(tetriminos, buf, i);
-			move_tet(tetriminos, i);
+			create_tet(tet, buf, i);
+			get_param(tet, buf, i);
+			move_tet(tet, i);
 		}
 		else
 		{
@@ -223,7 +223,7 @@ int		read_file(char *file, int fd)
 			y = 0;
 			while (y < 5)
 			{
-				printf("%c", tetriminos[i].line[x][y]);
+				printf("%c", tet[i].line[x][y]);
 				y++;
 			}
 			x++;
@@ -231,7 +231,7 @@ int		read_file(char *file, int fd)
 		i--;
 		printf("\n");
 	} */
-	solve_game(tetriminos, i);
+	solve_game(tet, i);
 	if (ret <= 0 && (lastret == 21 || !lastret))
 		ft_putstr("Error\n");
 	return (1);
