@@ -86,14 +86,13 @@ void		get_param(t_term	*tetriminos, char *buf, int i)
 	}
 }
 
-void	change_buf(t_term	*tetriminos, int  id)
+void	move_tet(t_term	*tetriminos, int  id)
 {
 	int x;
 	int y;
 	int	f1;
 	int f2;
 	
-	id--;
 	tetriminos[id].x = 0;
 	x = 0;
 	y = 0;
@@ -104,40 +103,27 @@ void	change_buf(t_term	*tetriminos, int  id)
 		tetriminos[id].y = 0;
 		while (tetriminos[id].y < 4)
 		{
-			if (tetriminos[id].line[tetriminos[id].x][tetriminos[id].y] != '.' && tetriminos[id].x > x && f1 == 0)
-			{
-				x = tetriminos[id].x;
-				f1++;
-			}
-			if (tetriminos[id].line[tetriminos[id].x][tetriminos[id].y] != '.' && tetriminos[id].y > y && f2 == 0)
-			{
-				y = tetriminos[id].y;
-				f2++;
-			}
-
-			tetriminos[id].y++;
-		}
-		tetriminos[id].x++;
-	}
-	printf("x = %d\n", x);
-	printf("y = %d\n", y);
-	tetriminos[id].x = 0;
-	while (tetriminos[id].x < 4)
-	{
-		tetriminos[id].y = 0;
-		while (tetriminos[id].y < 4)
-		{
 			if (tetriminos[id].line[tetriminos[id].x][tetriminos[id].y] != '.')
 			{
-				tetriminos[id].line[tetriminos[id].x][tetriminos[id].y - y] = tetriminos[id].line[tetriminos[id].x][tetriminos[id].y];
-				tetriminos[id].line[tetriminos[id].x][tetriminos[id].y] = '.';
+				if (tetriminos[id].x >= x && f1 == 0)
+				{
+					x = tetriminos[id].x;
+					f1++;
+				}
+				if (tetriminos[id].y >= y && f2 == 0)
+				{
+					y = tetriminos[id].y;
+					f2++;
+				}
+				if (f2 != 0 && tetriminos[id].y < y)
+					y = tetriminos[id].y;
 			}
 			tetriminos[id].y++;
 		}
 		tetriminos[id].x++;
 	}
 	tetriminos[id].x = 0;
-	while (tetriminos[id].x < 4)
+	while (tetriminos[id].x < 4 && x > 0)
 	{
 		tetriminos[id].y = 0;
 		while (tetriminos[id].y < 4)
@@ -145,6 +131,21 @@ void	change_buf(t_term	*tetriminos, int  id)
 			if (tetriminos[id].line[tetriminos[id].x][tetriminos[id].y] != '.')
 			{
 				tetriminos[id].line[tetriminos[id].x - x][tetriminos[id].y] = tetriminos[id].line[tetriminos[id].x][tetriminos[id].y];
+				tetriminos[id].line[tetriminos[id].x][tetriminos[id].y] = '.';
+			}
+			tetriminos[id].y++;
+		}
+		tetriminos[id].x++;
+	}
+	tetriminos[id].x = 0;
+	while (tetriminos[id].x < 4 && y > 0)
+	{
+		tetriminos[id].y = 0;
+		while (tetriminos[id].y < 4)
+		{
+			if (tetriminos[id].line[tetriminos[id].x][tetriminos[id].y] != '.')
+			{
+				tetriminos[id].line[tetriminos[id].x][tetriminos[id].y - y] = tetriminos[id].line[tetriminos[id].x][tetriminos[id].y];
 				tetriminos[id].line[tetriminos[id].x][tetriminos[id].y] = '.';
 			}
 			tetriminos[id].y++;
@@ -187,8 +188,6 @@ int		read_file(char *file, int fd)
 	int lastret;
 	char buf[255];
 	static t_term	tetriminos[26];
-	//int		x;
-	//int		y;
 
 	i = -1;
 	ret = 0;
@@ -207,6 +206,7 @@ int		read_file(char *file, int fd)
 			i++;
 			create_tetriminos(tetriminos, buf, i);
 			get_param(tetriminos, buf, i);
+			move_tet(tetriminos, i);
 		}
 		else
 		{
@@ -214,13 +214,10 @@ int		read_file(char *file, int fd)
 			return (0);
 		}
 	}
-	change_buf(tetriminos, i);
 	/*i--;
 	while (i >= 0)
 	{
 		x = 0;
-		printf("width: %d\n", (int)tetriminos[i].width);
-		printf("height: %d\n", (int)tetriminos[i].height);
 		while (x < 4)
 		{
 			y = 0;
