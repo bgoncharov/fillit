@@ -197,7 +197,7 @@ int		read_file(char *file, int fd)
 		ft_putstr("Error\n");
 		return (0);
 	}
-	while ((ret = read(fd, buf, 21)) > 0)
+	while ((ret = read(fd, buf, 21)) >= 20)
 	{
 		lastret = ret;
 		buf[ret] = '\0';
