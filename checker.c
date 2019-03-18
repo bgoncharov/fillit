@@ -164,6 +164,7 @@ void	create_tet(t_term	*tet, char *buf, int i)
 	x = 0;
 	j = 0;
 	c = c + i;
+	tet[i].letter = c;//?
 	while (x < 4 && buf[j] != '\0')
 	{
 		y = 0;

@@ -5,28 +5,28 @@ int     min_size(int count)
 {
     int size;
 
-	size = 1;
+	size = 2;
 	while (size * size < count)
 		size++;
 	return (size);
 }
 
-void    init_board(t_board *board)
+void    init_board(t_board *board, int size)
 {
+    int     i;
     int     j;
-    int     k;
 
     j = 0;
-    while (j < 12)
+    while (j < size)
     {
-        k = 0;
-        while (k < 12)
+        i = -1;
+        while (i < size)
         {
-            board->s[j][k] = '.';
-            k++;
+            i++;
+            board->s[j][i] = '.';
         }
-        board->s[j][k] = '\n';
-        board->s[j][k + 1] = '\0';
+        board->s[j][i] = '\n';
+        board->s[j][i + 1] = '\0';
         j++;
     }
 }
@@ -40,17 +40,16 @@ void    print_board(t_board *board, int size)
     while (j < size)
     {
         k = 0;
-        while (k < size)
+        while (k <= size)
         {
             printf("%c", board->s[j][k]);
             k++;
         }
-        printf("\n");
         j++;
     }
 }
 
-int revert_board(t_board *board, t_term *tet, int w, int h, int id)
+/*int revert_board(t_board *board, t_term *tet, int w, int h, int id)
 {
     int i;
     int j;
@@ -70,60 +69,97 @@ int revert_board(t_board *board, t_term *tet, int w, int h, int id)
         j++;
     }
     return (0);
-}
+}*/
 
-int put_on_board(t_board *board, t_term *tet, int id)
+/*int put_on_board(t_board *board, t_term *tet, int id)
 {
     int i;
     int j;
-    int start;
-
+    int flag;
+    
     j = 0;
-    start = 1;
+    flag = 1;
     if (board->s[tet[id].y][tet[id].x] != '.' && tet[id].line[0][0] != '.')
         return (0);
-    while (start && j <= tet[id].height)
+    while (flag && j < tet[id].height)
     {
         i = 0;
-        while (start && i <= tet[id].width)
+        while (flag && i < tet[id].width)
         {
             if (board->s[tet[id].y + j][tet[id].x + i] != '.' && tet[id].line[j][i] != '.')
-                start = 0;
+                flag = 0;
             else if (board->s[tet[id].y + j][tet[id].x + i] == '.')
-            {
                 board->s[tet[id].y + j][tet[id].x + i] = tet[id].line[j][i];
-            }
-            if (start) 
+            if (flag) 
                 i++;
         }
-        if (start) 
+        if (flag)
             j++;
     }
-    if (start)
+    if (flag)
         return (1);
     return (revert_board(board, tet, i, j, id));
+}*/
+
+void	set_piece(t_board *board, t_term *tet, int id, char c)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while (i < tet[id].width)
+	{
+		j = 0;
+		while (j < tet[id].height)
+		{
+			if (tet[id].line[j][i] != '.')
+				board->s[tet[id].y + j][tet[id].x + i] = c;
+			j++;
+		}
+		i++;
+	}
 }
+
+int		place(t_board *board, t_term *tet, int id)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while (i < tet[id].width)
+	{
+		j = 0;
+		while (j < tet[id].height)
+		{
+			if (tet[id].line[j][i] != '.' && board->s[tet[id].y + j][tet[id].x + i] != '.')
+				return (0);
+			j++;
+		}
+		i++;
+	}
+	set_piece(board, tet, id, tet[id].letter);
+	return (1);
+}
+
 
 int check_solve(t_board *board, t_term *tet, int size, int id, int count)
 {
    /* if (!tetrimino)
         return (0); */
-    tet[id].x = 0;
     tet[id].y = 0;
-    while (tet[id].y + tet[id].height <= size && id < count)
+    while (tet[id].y < size) //- tet[id].height + 1)//(tet[id].y + tet[id].height <= size)//
     {
         tet[id].x = 0;
-        while (tet[id].x + tet[id].width <= size && id < count)
+        while (tet[id].x < size)// - tet[id].width + 1)//(tet[id].x + tet[id].width <= size)//
         {
-            if (put_on_board(board, tet, id))
+            if (place(board, tet, id))//(put_on_board(board, tet, id))
             {
                 if (id == count - 1)
                     return (1);
-                id++;
-                if (check_solve(board, tet, size, id, count))
+                if (check_solve(board, tet, size, ++id, count))
                     return (1);
                 else
-                    revert_board(board, tet, tet[id].width - 1, tet[id].height - 1, id);
+                    set_piece(board, tet, id, '.');//revert_board(board, tet, tet[id].width - 1, tet[id].height - 1, id);
             }
             tet[id].x++;
         }
@@ -139,15 +175,16 @@ void    solve_game(t_term	*tet, int id)
     int     count;
 
     count = id + 1;
-    size = min_size(count) * 2 - 1;
-    init_board(&board);
+    size = min_size(count * 4);
+    init_board(&board, size);
     printf("size = %d\n", size);
-    print_board(&board, size);
-    printf("\n");
+   // print_board(&board, size);
+    //printf("\n");
+    id = 0;
     while (!check_solve(&board, tet, size, id, count) && size <= 12)
     {
         size++;
-        init_board(&board);    
+        init_board(&board, size);    
     }
     printf("size = %d\n", size);
     print_board(&board, size);
