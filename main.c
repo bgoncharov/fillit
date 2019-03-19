@@ -14,6 +14,6 @@ int				main(int argc, char **argv)
 	//	printf("reading is ok\n");
 	//else
 		ft_putstr("Error\n");
-	system("leaks a.out");
+	//system("leaks a.out");
 	return (0);
 }

@@ -1,6 +1,6 @@
 #include "fillit.h"
 
-static int		is_valid(int c, int i)
+int		is_valid(int c, int i)
 {
 	if (c == '.' || c == '#'
 		|| ((c == '\n') && ((i % 5 == 4) || (i == 20))))
@@ -8,7 +8,7 @@ static int		is_valid(int c, int i)
 	return (0);
 }
 
-static int		check_tet(char *buf, int i)
+int		check_tet(char *buf, int i)
 {
 	int count;
 
@@ -29,7 +29,7 @@ static int		check_tet(char *buf, int i)
 	return (count + check_tet(buf, ++i));
 }
 
-static int		check_block(char *buf)
+int		check_block(char *buf)
 {
 	int i;
 	int part;
@@ -52,167 +52,19 @@ static int		check_block(char *buf)
 	{
 		res = check_tet(buf, start);
 		if (res == 6 || res == 8)
-		{
-			//printf("check is OK\n");
 			return (1);
-		}
 	}
 	else
-		printf("check error\n");
+		ft_putstr("Error\n");
 	return (0);
-}
-
-void		get_param(t_term	*tet, char *buf)
-{
-	int	j;
-	int	k;
-
-	j = 0;
-	k = 0;
-	tet->width = 0;
-	tet->height = 0;
-	while (j < 4)
-	{
-		if (buf[j] == '#' || buf[j + 5] == '#' || buf[j + 10] == '#' ||\
-				buf[j + 15] == '#')
-			tet->width++;
-		j++;
-	}
-	while (k < 19)
-	{
-		if (buf[k] == '#' || buf[k + 1] == '#' || buf[k + 2] == '#' || buf[k + 3] == '#')
-					tet->height++;
-		k = k + 5;
-	}
-}
-
-void	move_tet(t_term	*tet)
-{
-	int x;
-	int y;
-	int	f1;
-	int f2;
-	
-	tet->x = 0;
-	x = 0;
-	y = 0;
-	f1 = 0;
-	f2 = 0;
-	while (tet->x  < 4)
-	{
-		tet->y = 0;
-		while (tet->y < 4)
-		{
-			if (tet->line[tet->x][tet->y] != '.')
-			{
-				if (tet->x >= x && f1 == 0)
-				{
-					x = tet->x;
-					f1++;
-				}
-				if (tet->y >= y && f2 == 0)
-				{
-					y = tet->y;
-					f2++;
-				}
-				if (f2 != 0 && tet->y < y)
-					y = tet->y;
-			}
-			tet->y++;
-		}
-		tet->x++;
-	}
-	tet->x = 0;
-	while (tet->x < 4 && x > 0)
-	{
-		tet->y = 0;
-		while (tet->y < 4)
-		{
-			if (tet->line[tet->x][tet->y] != '.')
-			{
-				tet->line[tet->x - x][tet->y] = tet->line[tet->x][tet->y];
-				tet->line[tet->x][tet->y] = '.';
-			}
-			tet->y++;
-		}
-		tet->x++;
-	}
-	tet->x = 0;
-	while (tet->x < 4 && y > 0)
-	{
-		tet->y = 0;
-		while (tet->y < 4)
-		{
-			if (tet->line[tet->x][tet->y] != '.')
-			{
-				tet->line[tet->x][tet->y - y] = tet->line[tet->x][tet->y];
-				tet->line[tet->x][tet->y] = '.';
-			}
-			tet->y++;
-		}
-		tet->x++;
-	}
-}
-
-t_term	*create_tet(char *buf)
-{
-	t_term	*tet;
-	static char	c = 'A';
-	int		x;
-	int		y;
-	int		j;
-	
-	x = 0;
-	j = 0;
-	tet = ft_memalloc(sizeof(t_term));
-	tet->x = 0;
-	tet->y = 0;
-	tet->letter = c;
-	tet->next = NULL;
-	while (x < 4 && buf[j] != '\0')
-	{
-		y = 0;
-		while (y < 5 && buf[j] != '\0')
-		{
-			if (buf[j] == '#')
-				tet->line[x][y] = c;
-			else
-				tet->line[x][y] = buf[j];
-			j++;
-			y++;
-		}
-		tet->line[x][y] = '\0';
-		x++;
-	}
-	c++;
-	return (tet);
-}
-
-void			pushback(t_board *board, t_term *tet)
-{
-	t_term		*new;
-
-	new = board->tetrs;
-	if (!new)
-	{
-		board->tetrs = tet;
-		board->nbr++;
-	}
-	else
-	{
-		while (new->next)
-			new = new->next;
-		new->next = tet;
-		board->nbr++;
-	}
 }
 
 int		read_file(char *file, int fd)
 {
-	int	i;
-	int ret;
-	int lastret;
-	char buf[255];
+	int		i;
+	int		ret;
+	int		lastret;
+	char	buf[255];
 	t_term	*tet;
 	t_board board;
 
@@ -244,9 +96,8 @@ int		read_file(char *file, int fd)
 			return (0);
 		}
 	}
-	//print_tet(&board);
-	solve_game(&board);
 	if (ret <= 0 && (lastret == 21 || !lastret))
 		ft_putstr("Error\n");
+	solve_game(&board);
 	return (1);
 }
