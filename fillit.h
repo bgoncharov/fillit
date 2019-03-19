@@ -28,7 +28,7 @@ typedef struct	s_board
 	char		s[12][13];
 }				t_board;
 
-void    solve_game(t_term	*tet);
+void    solve_game(t_board *board);
 void    init_board(t_board *board, int size);
 void    print_board(t_board *board, int size);
 

@@ -167,7 +167,7 @@ t_term	*create_tet(char *buf)
 	tet = ft_memalloc(sizeof(t_term));
 	tet->x = 0;
 	tet->y = 0;
-	tet->letter = c++;
+	tet->letter = c;
 	tet->next = NULL;
 	while (x < 4 && buf[j] != '\0')
 	{
@@ -184,6 +184,7 @@ t_term	*create_tet(char *buf)
 		tet->line[x][y] = '\0';
 		x++;
 	}
+	c++;
 	return (tet);
 }
 
@@ -212,7 +213,6 @@ int		read_file(char *file, int fd)
 	int ret;
 	int lastret;
 	char buf[255];
-	//char temp[4][5];
 	t_term	*tet;
 	t_board board;
 
@@ -244,7 +244,8 @@ int		read_file(char *file, int fd)
 			return (0);
 		}
 	}
-	solve_game(tet);
+	//print_tet(&board);
+	solve_game(&board);
 	if (ret <= 0 && (lastret == 21 || !lastret))
 		ft_putstr("Error\n");
 	return (1);
