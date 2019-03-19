@@ -10,13 +10,14 @@ int				read_file(char *file, int fd);
 
 typedef struct	s_term
 {
-	int		x;
-	int		y;
-	int		height;
-	int		width;
-	char	letter;//?
-	char	line[4][5];
-}				t_term;
+	int				x;
+	int				y;
+	int				height;
+	int				width;
+	char			letter;//?
+	char			line[4][5];
+	struct s_term	*next;
+}					t_term;
 
 typedef struct	s_board
 {
