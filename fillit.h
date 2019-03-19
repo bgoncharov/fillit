@@ -21,12 +21,14 @@ typedef struct	s_term
 
 typedef struct	s_board
 {
-	int		x;
-	int		y;
-	char s[12][13];
+	t_term		*tetrs;
+	int			x;
+	int			y;
+	int			nbr;
+	char		s[12][13];
 }				t_board;
 
-void    solve_game(t_term	*tet, int i);
+void    solve_game(t_term	*tet);
 void    init_board(t_board *board, int size);
 void    print_board(t_board *board, int size);
 

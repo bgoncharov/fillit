@@ -154,9 +154,7 @@ int check_solve(t_board *board, t_term *tet, int size, int count)
         {
             if (place(board, tet))//(put_on_board(board, tet))
             {
-                if (tet->next == count - 1)
-                    return (1);
-                if (check_solve(board, tet, size, ++id, count))
+                if (check_solve(board, tet, size, count))
                     return (1);
                 else
                     set_piece(board, tet, '.');//revert_board(board, tet, tet[id].width - 1, tet[id].height - 1, id);
@@ -174,13 +172,12 @@ void    solve_game(t_term	*tet)
     int     size;
     int     count;
 
-    count = board->nbr + 1;
-    size = min_size(count * 4);
+    count = board.nbr;
+    size = min_size(count * 4) + 1;
     init_board(&board, size);
     printf("size = %d\n", size);
    // print_board(&board, size);
     //printf("\n");
-    id = 0;
     while (!check_solve(&board, tet, size, count) && size <= 12)
     {
         size++;
