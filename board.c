@@ -42,7 +42,7 @@ void    print_board(t_board *board, int size)
         k = 0;
         while (k <= size)
         {
-            printf("%c", board->s[j][k]);
+            ft_putchar(board->s[j][k]);
             k++;
         }
         j++;
