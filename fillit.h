@@ -31,5 +31,6 @@ typedef struct	s_board
 void    solve_game(t_board *board);
 void    init_board(t_board *board, int size);
 void    print_board(t_board *board, int size);
+int     min_size(int count);
 
 #endif
