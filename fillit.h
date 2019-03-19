@@ -32,5 +32,15 @@ void    solve_game(t_board *board);
 void    init_board(t_board *board, int size);
 void    print_board(t_board *board, int size);
 int     min_size(int count);
+int		check_tet(char *buf, int i);
+int		check_block(char *buf);
+void	get_param(t_term	*tet, char *buf);
+void	move_tet(t_term	*tet);
+t_term	*create_tet(char *buf);
+void	pushback(t_board *board, t_term *tet);
+int		read_file(char *file, int fd);
+void	set_piece(t_board *board, t_term *tet, char c);
+int		place(t_board *board, t_term *tet);
+int 	check_solve(t_board *board, t_term *tet, int size, int count);
 
 #endif
