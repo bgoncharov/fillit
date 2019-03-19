@@ -62,123 +62,146 @@ static int		check_block(char *buf)
 	return (0);
 }
 
-void		get_param(t_term	*tet, char *buf, int i)
+void		get_param(t_term	*tet, char *buf)
 {
 	int	j;
 	int	k;
 
 	j = 0;
 	k = 0;
-	tet[i].width = 0;
-	tet[i].height = 0;
+	tet.width = 0;
+	tet.height = 0;
 	while (j < 4)
 	{
 		if (buf[j] == '#' || buf[j + 5] == '#' || buf[j + 10] == '#' ||\
 				buf[j + 15] == '#')
-			tet[i].width++;
+			tet.width++;
 		j++;
 	}
 	while (k < 19)
 	{
 		if (buf[k] == '#' || buf[k + 1] == '#' || buf[k + 2] == '#' || buf[k + 3] == '#')
-					tet[i].height++;
+					tet.height++;
 		k = k + 5;
 	}
 }
 
-void	move_tet(t_term	*tet, int  id)
+void	move_tet(t_term	*tet)
 {
 	int x;
 	int y;
 	int	f1;
 	int f2;
 	
-	tet[id].x = 0;
+	tet.x = 0;
 	x = 0;
 	y = 0;
 	f1 = 0;
 	f2 = 0;
-	while (tet[id].x  < 4)
+	while (tet.x  < 4)
 	{
-		tet[id].y = 0;
-		while (tet[id].y < 4)
+		tet.y = 0;
+		while (tet.y < 4)
 		{
-			if (tet[id].line[tet[id].x][tet[id].y] != '.')
+			if (tet.line[tet.x][tet.y] != '.')
 			{
-				if (tet[id].x >= x && f1 == 0)
+				if (tet.x >= x && f1 == 0)
 				{
-					x = tet[id].x;
+					x = tet.x;
 					f1++;
 				}
-				if (tet[id].y >= y && f2 == 0)
+				if (tet.y >= y && f2 == 0)
 				{
-					y = tet[id].y;
+					y = tet.y;
 					f2++;
 				}
-				if (f2 != 0 && tet[id].y < y)
-					y = tet[id].y;
+				if (f2 != 0 && tet.y < y)
+					y = tet.y;
 			}
-			tet[id].y++;
+			tet.y++;
 		}
-		tet[id].x++;
+		tet.x++;
 	}
-	tet[id].x = 0;
-	while (tet[id].x < 4 && x > 0)
+	tet.x = 0;
+	while (tet.x < 4 && x > 0)
 	{
-		tet[id].y = 0;
-		while (tet[id].y < 4)
+		tet.y = 0;
+		while (tet.y < 4)
 		{
-			if (tet[id].line[tet[id].x][tet[id].y] != '.')
+			if (tet.line[tet.x][tet.y] != '.')
 			{
-				tet[id].line[tet[id].x - x][tet[id].y] = tet[id].line[tet[id].x][tet[id].y];
-				tet[id].line[tet[id].x][tet[id].y] = '.';
+				tet.line[tet.x - x][tet.y] = tet.line[tet.x][tet.y];
+				tet.line[tet.x][tet.y] = '.';
 			}
-			tet[id].y++;
+			tet.y++;
 		}
-		tet[id].x++;
+		tet.x++;
 	}
-	tet[id].x = 0;
+	tet.x = 0;
 	while (tet[id].x < 4 && y > 0)
 	{
 		tet[id].y = 0;
 		while (tet[id].y < 4)
 		{
-			if (tet[id].line[tet[id].x][tet[id].y] != '.')
+			if (tet.line[tet.x][tet.y] != '.')
 			{
-				tet[id].line[tet[id].x][tet[id].y - y] = tet[id].line[tet[id].x][tet[id].y];
-				tet[id].line[tet[id].x][tet[id].y] = '.';
+				tet.line[tet.x][tet.y - y] = tet.line[tet.x][tet.y];
+				tet.line[tet.x][tet.y] = '.';
 			}
-			tet[id].y++;
+			tet.y++;
 		}
-		tet[id].x++;
+		tet.x++;
 	}
 }
 
-void	create_tet(t_term	*tet, char *buf, int i)
+t_term	create_tet(char *buf)
 {
-	char	c = 'A';
+	t_term	*tet
+	static char	c = 'A';
 	int		x;
 	int		y;
 	int		j;
 	
 	x = 0;
 	j = 0;
-	c = c + i;
-	tet[i].letter = c;//?
+	tet->x = 0;
+	tet->y = 0;
+	tet->letter = c++;
+	tet->next = NULL;
 	while (x < 4 && buf[j] != '\0')
 	{
 		y = 0;
 		while (y < 5 && buf[j] != '\0')
 		{
 			if (buf[j] == '#')
-				tet[i].line[x][y] = c;
+				tet->line[x][y] = c;
 			else
-				tet[i].line[x][y] = buf[j];
+				tet->line[x][y] = buf[j];
 			j++;
 			y++;
 		}
-		tet[i].line[x][y] = '\0';
+		tet->line[x][y] = '\0';
 		x++;
+	}
+	return (tet);
+}
+
+void			pushback(t_board *board, t_term *tet)
+{
+	t_tet		*new;
+
+	new = board->tetrs;
+	if (!new)
+	{
+		board->tetrs = tet;
+		board->nbr++;
+	}
+	else
+	{
+		while (new->next)
+			new = new->next;
+		new->next = tet;
+		board->nbr++;
 	}
 }
 
@@ -188,8 +211,12 @@ int		read_file(char *file, int fd)
 	int ret;
 	int lastret;
 	char buf[255];
-	static t_term	tet[26];
+	char temp[4][5];
+	t_term	*tet;
+	t_board board;
 
+	board->tetrs = NULL;
+	board->nbr = 0;
 	i = -1;
 	ret = 0;
 	lastret = 0;
@@ -205,9 +232,10 @@ int		read_file(char *file, int fd)
 		if (ret >= 20 && check_block(buf) && i < 26)
 		{
 			i++;
-			create_tet(tet, buf, i);
-			get_param(tet, buf, i);
-			move_tet(tet, i);
+			tet = create_tet(buf);
+			get_param(tet, buf);
+			move_tet(tet);
+			pushback(board, tet);
 		}
 		else
 		{
@@ -215,24 +243,7 @@ int		read_file(char *file, int fd)
 			return (0);
 		}
 	}
-	/*i--;
-	while (i >= 0)
-	{
-		x = 0;
-		while (x < 4)
-		{
-			y = 0;
-			while (y < 5)
-			{
-				printf("%c", tet[i].line[x][y]);
-				y++;
-			}
-			x++;
-		}
-		i--;
-		printf("\n");
-	} */
-	solve_game(tet, i);
+	solve_game(tet);
 	if (ret <= 0 && (lastret == 21 || !lastret))
 		ft_putstr("Error\n");
 	return (1);
