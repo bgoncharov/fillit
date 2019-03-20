@@ -14,7 +14,7 @@
 
 int		ft_error(void)
 {
-	ft_putstr("Error\n");
+	ft_putstr("error\n");
 	exit(0);
 }
 
@@ -49,7 +49,7 @@ void	get_tet(t_board *board, char *buf)
 	f1 = 0;
 	tet = create_tet(buf);
 	get_param(tet, buf);
-	tet->x = 0;
+	tet->y = 0;
 	find_coord(tet, x, y, f1);
 	pushback(board, tet);
 }
@@ -66,7 +66,7 @@ int		read_file(char *file, int fd, t_board *board)
 	lastret = 0;
 	if ((fd = open(file, O_RDONLY)) < 0)
 		ft_error();
-	while ((ret = read(fd, buf, 21)) >= 20)
+	while ((ret = read(fd, buf, 21)) > 0)
 	{
 		lastret = ret;
 		buf[ret] = '\0';
@@ -99,7 +99,6 @@ int		main(int argc, char **argv)
 	if (read_file(argv[1], fd, &board))
 		solve_game(&board);
 	else
-		ft_putstr("Error\n");
-	//system("leaks fillit");
+		ft_putstr("error\n");
 	return (0);
 }

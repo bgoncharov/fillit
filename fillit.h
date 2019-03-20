@@ -15,7 +15,6 @@
 
 # include "libft/libft.h"
 # include <stdlib.h>
-# include <stdio.h>
 # include <unistd.h>
 
 typedef struct		s_term
@@ -48,11 +47,11 @@ void				get_tet(t_board *board, char *buf);
 void				get_param(t_term	*tet, char *buf);
 void				find_coord(t_term	*tet, int x, int y, int f1);
 void				move_up(t_term *tet, int x, int y);
-void				move_left(t_term *tet, int y);
+void				move_left(t_term *tet, int x);
 t_term				*create_tet(char *buf);
 void				pushback(t_board *board, t_term *tet);
-void				set_piece(t_board *board, t_term *tet, char c);
-int					place(t_board *board, t_term *tet);
+void				put_on_board(t_board *board, t_term *tet, char c);
+int					check_place(t_board *board, t_term *tet);
 int					check_solve(t_board *board, t_term *tet, int size);
 
 #endif

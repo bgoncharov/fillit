@@ -11,46 +11,45 @@
 /* ************************************************************************** */
 
 #include "fillit.h"
-#include <stdio.h>
 
-void		set_piece(t_board *board, t_term *tet, char c)
+void		put_on_board(t_board *board, t_term *tet, char c)
 {
 	int		i;
 	int		j;
 
-	i = 0;
-	while (i < tet->width)
+	j = 0;
+	while (j < tet->height)
 	{
-		j = 0;
-		while (j < tet->height)
+		i = 0;
+		while (i < tet->width)
 		{
 			if (tet->line[j][i] != '.')
 				board->s[tet->y + j][tet->x + i] = c;
-			j++;
+			i++;
 		}
-		i++;
+		j++;
 	}
 }
 
-int			place(t_board *board, t_term *tet)
+int			check_place(t_board *board, t_term *tet)
 {
 	int		i;
 	int		j;
 
-	i = 0;
-	while (i < tet->width)
+	j = 0;
+	while (j < tet->height)
 	{
-		j = 0;
-		while (j < tet->height)
+		i = 0;
+		while (i < tet->width)
 		{
 			if (tet->line[j][i] != '.' &&
 				board->s[tet->y + j][tet->x + i] != '.')
 				return (0);
-			j++;
+			i++;
 		}
-		i++;
+		j++;
 	}
-	set_piece(board, tet, tet->letter);
+	put_on_board(board, tet, tet->letter);
 	return (1);
 }
 
@@ -62,14 +61,14 @@ int			check_solve(t_board *board, t_term *tet, int size)
 		tet->x = 0;
 		while (tet->x < size)
 		{
-			if (place(board, tet))
+			if (check_place(board, tet))
 			{
 				if (!tet->next)
 					return (1);
 				if (tet->next && check_solve(board, tet->next, size))
 					return (1);
 				else
-					set_piece(board, tet, '.');
+					put_on_board(board, tet, '.');
 			}
 			tet->x++;
 		}
@@ -84,13 +83,10 @@ void		solve_game(t_board *board)
 
 	size = min_size(board->nbr * 4);
 	init_board(board, size);
-	printf("size = %d\n", size);
 	while (!check_solve(board, board->tetrs, size) && size <= 12)
 	{
 		size++;
 		init_board(board, size);
 	}
-	printf("size = %d\n", size);
 	print_board(board, size);
-	ft_putstr("\n");
 }

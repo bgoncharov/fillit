@@ -14,65 +14,65 @@
 
 void	get_param(t_term *tet, char *buf)
 {
+	int	i;
 	int	j;
-	int	k;
 
+	i = 0;
 	j = 0;
-	k = 0;
 	tet->width = 0;
 	tet->height = 0;
-	while (j < 4)
+	while (i < 4)
 	{
-		if (buf[j] == '#' || buf[j + 5] == '#' || buf[j + 10] == '#' ||\
-				buf[j + 15] == '#')
+		if (buf[i] == '#' || buf[i + 5] == '#' || buf[i + 10] == '#' ||\
+				buf[i + 15] == '#')
 			tet->width++;
-		j++;
+		i++;
 	}
-	while (k < 19)
+	while (j < 19)
 	{
-		if (buf[k] == '#' || buf[k + 1] == '#' ||\
-		buf[k + 2] == '#' || buf[k + 3] == '#')
+		if (buf[j] == '#' || buf[j + 1] == '#' ||\
+		buf[j + 2] == '#' || buf[j + 3] == '#')
 			tet->height++;
-		k = k + 5;
+		j = j + 5;
 	}
 }
 
 void	move_up(t_term *tet, int x, int y)
 {
-	tet->x = 0;
-	while (tet->x < 4 && x > 0)
+	tet->y = 0;
+	while (tet->y < 4 && y > 0)
 	{
-		tet->y = 0;
-		while (tet->y < 4)
+		tet->x = 0;
+		while (tet->x < 4)
 		{
-			if (tet->line[tet->x][tet->y] != '.')
+			if (tet->line[tet->y][tet->x] != '.')
 			{
-				tet->line[tet->x - x][tet->y] = tet->line[tet->x][tet->y];
-				tet->line[tet->x][tet->y] = '.';
+				tet->line[tet->y - y][tet->x] = tet->line[tet->y][tet->x];
+				tet->line[tet->y][tet->x] = '.';
 			}
-			tet->y++;
+			tet->x++;
 		}
-		tet->x++;
+		tet->y++;
 	}
-	move_left(tet, y);
+	move_left(tet, x);
 }
 
-void	move_left(t_term *tet, int y)
+void	move_left(t_term *tet, int x)
 {
-	tet->x = 0;
-	while (tet->x < 4 && y > 0)
+	tet->y = 0;
+	while (tet->y < 4 && x > 0)
 	{
-		tet->y = 0;
-		while (tet->y < 4)
+		tet->x = 0;
+		while (tet->x < 4)
 		{
-			if (tet->line[tet->x][tet->y] != '.')
+			if (tet->line[tet->y][tet->x] != '.')
 			{
-				tet->line[tet->x][tet->y - y] = tet->line[tet->x][tet->y];
-				tet->line[tet->x][tet->y] = '.';
+				tet->line[tet->y][tet->x - x] = tet->line[tet->y][tet->x];
+				tet->line[tet->y][tet->x] = '.';
 			}
-			tet->y++;
+			tet->x++;
 		}
-		tet->x++;
+		tet->y++;
 	}
 }
 
@@ -81,25 +81,25 @@ void	find_coord(t_term *tet, int x, int y, int f1)
 	int f2;
 
 	f2 = 0;
-	while (tet->x < 4)
+	while (tet->y < 4)
 	{
-		tet->y = 0;
-		while (tet->y < 4)
+		tet->x = 0;
+		while (tet->x < 4)
 		{
-			if (tet->line[tet->x][tet->y] != '.')
+			if (tet->line[tet->y][tet->x] != '.')
 			{
-				x = (tet->x >= x && f1 == 0) ? tet->x : x;
-				if (tet->x >= x && f1 == 0)
+				y = (tet->y >= y && f1 == 0) ? tet->y : y;
+				if (tet->y >= y && f1 == 0)
 					f1++;
-				y = (tet->y >= y && f2 == 0) ? tet->y : y;
-				if (tet->y >= y && f2 == 0)
+				x = (tet->x >= x && f2 == 0) ? tet->x : x;
+				if (tet->x >= x && f2 == 0)
 					f2++;
-				if (f2 != 0 && tet->y < y)
-					y = tet->y;
+				if (f2 != 0 && tet->x < x)
+					x = tet->x;
 			}
-			tet->y++;
+			tet->x++;
 		}
-		tet->x++;
+		tet->y++;
 	}
 	move_up(tet, x, y);
 }
@@ -110,23 +110,23 @@ t_term	*create_tet(char *buf)
 	static char	c = 'A';
 
 	tet = ft_memalloc(sizeof(t_term));
-	tet->x = 0;
+	tet->y = 0;
 	tet->letter = c;
 	tet->next = NULL;
-	while (tet->x < 4 && *buf)
+	while (tet->y < 4 && *buf)
 	{
-		tet->y = 0;
-		while (tet->y < 5 && *buf)
+		tet->x = 0;
+		while (tet->x < 5 && *buf)
 		{
 			if (*buf == '#')
-				tet->line[tet->x][tet->y] = c;
+				tet->line[tet->y][tet->x] = c;
 			else
-				tet->line[tet->x][tet->y] = *buf;
+				tet->line[tet->y][tet->x] = *buf;
 			buf++;
-			tet->y++;
+			tet->x++;
 		}
-		tet->line[tet->x][tet->y] = '\0';
-		tet->x++;
+		tet->line[tet->y][tet->x] = '\0';
+		tet->y++;
 	}
 	c++;
 	return (tet);
