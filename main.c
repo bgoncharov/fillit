@@ -12,6 +12,6 @@ int				main(int argc, char **argv)
 	}
 	if (!read_file(argv[1], fd))
 		ft_putstr("Error\n");
-	//system("leaks a.out");
+	/* system("leaks a.out"); */
 	return (0);
 }
