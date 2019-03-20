@@ -53,49 +53,7 @@ int		check_block(char *buf)
 		&& (res == 6 || res == 8))
 		return (1);
 	else
-		ft_putstr("Error\n");
+		ft_error();
 	return (0);
 }
 
-int		read_file(char *file, int fd)
-{
-	int		i;
-	int		ret;
-	int		lastret;
-	char	buf[255];
-	t_term	*tet;
-	t_board board;
-
-	board.tetrs = NULL;
-	board.nbr = 0;
-	i = -1;
-	ret = 0;
-	lastret = 0;
-	if ((fd = open(file, O_RDONLY)) < 0)
-	{
-		ft_putstr("Error\n");
-		return (0);
-	}
-	while ((ret = read(fd, buf, 21)) >= 20)
-	{
-		lastret = ret;
-		buf[ret] = '\0';
-		if (ret >= 20 && check_block(buf) && i < 26)
-		{
-			i++;
-			tet = create_tet(buf);
-			get_param(tet, buf);
-			move_tet(tet);
-			pushback(&board, tet);
-		}
-		else
-		{
-			ft_putstr("Error\n");
-			return (0);
-		}
-	}
-	if (ret <= 0 && (lastret == 21 || !lastret))
-		ft_putstr("Error\n");
-	solve_game(&board);
-	return (1);
-}

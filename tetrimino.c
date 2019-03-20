@@ -37,18 +37,56 @@ void	get_param(t_term *tet, char *buf)
 	}
 }
 
-void	move_tet(t_term *tet)
+void	move_up(t_term *tet, int x)
+{
+	tet->x = 0;
+	while (tet->x < 4 && x > 0)
+	{
+		tet->y = 0;
+		while (tet->y < 4)
+		{
+			if (tet->line[tet->x][tet->y] != '.')
+			{
+				tet->line[tet->x - x][tet->y] = tet->line[tet->x][tet->y];
+				tet->line[tet->x][tet->y] = '.';
+			}
+			tet->y++;
+		}
+		tet->x++;
+	}
+}
+
+void	move_left(t_term *tet, int y)
+{
+	tet->x = 0;
+	while (tet->x < 4 && y > 0)
+	{
+		tet->y = 0;
+		while (tet->y < 4)
+		{
+			if (tet->line[tet->x][tet->y] != '.')
+			{
+				tet->line[tet->x][tet->y - y] = tet->line[tet->x][tet->y];
+				tet->line[tet->x][tet->y] = '.';
+			}
+			tet->y++;
+		}
+		tet->x++;
+	}
+}
+
+void	find_coord(t_term *tet)
 {
 	int x;
 	int y;
 	int	f1;
 	int f2;
 
-	tet->x = 0;
 	x = 0;
 	y = 0;
 	f1 = 0;
 	f2 = 0;
+	tet->x = 0;
 	while (tet->x < 4)
 	{
 		tet->y = 0;
@@ -73,36 +111,8 @@ void	move_tet(t_term *tet)
 		}
 		tet->x++;
 	}
-	tet->x = 0;
-	while (tet->x < 4 && x > 0)
-	{
-		tet->y = 0;
-		while (tet->y < 4)
-		{
-			if (tet->line[tet->x][tet->y] != '.')
-			{
-				tet->line[tet->x - x][tet->y] = tet->line[tet->x][tet->y];
-				tet->line[tet->x][tet->y] = '.';
-			}
-			tet->y++;
-		}
-		tet->x++;
-	}
-	tet->x = 0;
-	while (tet->x < 4 && y > 0)
-	{
-		tet->y = 0;
-		while (tet->y < 4)
-		{
-			if (tet->line[tet->x][tet->y] != '.')
-			{
-				tet->line[tet->x][tet->y - y] = tet->line[tet->x][tet->y];
-				tet->line[tet->x][tet->y] = '.';
-			}
-			tet->y++;
-		}
-		tet->x++;
-	}
+	move_up(tet, x);
+	move_left(tet, y);
 }
 
 t_term	*create_tet(char *buf)
