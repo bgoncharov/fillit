@@ -10,7 +10,7 @@ int		is_valid(int c, int i)
 
 int		check_tet(char *buf, int i)
 {
-	int count;
+	int		count;
 
 	if (i == 19)
 		return (0);
@@ -23,7 +23,7 @@ int		check_tet(char *buf, int i)
 			count++;
 		if (i >= 5 && buf[i - 5] == '#')
 			count++;
-		if (i < 14 && buf[i + 5] == '#')
+		if (i <= 14 && buf[i + 5] == '#')
 			count++;
 	}
 	return (count + check_tet(buf, ++i));
@@ -31,10 +31,10 @@ int		check_tet(char *buf, int i)
 
 int		check_block(char *buf)
 {
-	int i;
-	int part;
-	int start;
-	int res;
+	int		i;
+	int		part;
+	int		start;
+	int		res;
 
 	i = 0;
 	part = 0;

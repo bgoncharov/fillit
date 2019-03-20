@@ -1,29 +1,25 @@
 NAME = fillit
 
-CFLAGS = -Wall -Werror -Wextra
+FLAGS = -Wall -Werror -Wextra
 
-SRC = parser.c main.c
+SRC = main.c board.c checker.c fillit.c tetrimino.c
 
 OBJS = *.o
 
-$(NAME): lib $(OBJS)
-	gcc $(CFLAGS) -o $(NAME) $(OBJS) -L libft -lft
-
-$(OBJS):
-	gcc $(CFLAGS) -c $(SRC) -I/ -Ilibft/
-
 all: $(NAME)
+
+$(NAME): lib
+	gcc $(FLAGS) -o $(NAME) -I./libft -L./libft -lft -o fillit $(SRC)
 
 lib:
 	make -C libft
 
 clean:
-	/bin/rm -f $(OBJS)
-	make -C libft clean
+	/bin/rm -rf $(OBJS)
+	make -C libft/ clean
 
 fclean: clean
-	/bin/rm $(NAME)
-	make -C libft fclean
+	/bin/rm -rf $(NAME)
+	make -C libft/ fclean
 
-re:
-	fclean all
+re: fclean all

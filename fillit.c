@@ -3,8 +3,8 @@
 
 void	set_piece(t_board *board, t_term *tet, char c)
 {
-	int i;
-	int j;
+	int		i;
+	int		j;
 
 	i = 0;
 	while (i < tet->width)
@@ -22,8 +22,8 @@ void	set_piece(t_board *board, t_term *tet, char c)
 
 int		place(t_board *board, t_term *tet)
 {
-	int i;
-	int j;
+	int		i;
+	int		j;
 
 	i = 0;
 	while (i < tet->width)
@@ -43,43 +43,43 @@ int		place(t_board *board, t_term *tet)
 
 int check_solve(t_board *board, t_term *tet, int size, int count)
 {
-    tet->y = 0;
-    while (tet->y < size)
-    {
-        tet->x = 0;
-        while (tet->x < size)
-        {
-            if (place(board,  tet))
-            {
-                if (!tet->next)
-                    return (1);
-                if (tet->next && check_solve(board, tet->next, size, count))
-                    return (1);
-                else
-                    set_piece(board,  tet, '.');
-            }
-            tet->x++;
-        }
-        tet->y++;
-    }
-    return (0);
+	tet->y = 0;
+	while (tet->y < size)
+	{
+		tet->x = 0;
+		while (tet->x < size)
+		{
+			if (place(board,  tet))
+			{
+				if (!tet->next)
+					return (1);
+				if (tet->next && check_solve(board, tet->next, size, count))
+					return (1);
+				else
+					set_piece(board,  tet, '.');
+			}
+			tet->x++;
+		}
+		tet->y++;
+	}
+	return (0);
 }
 
 void    solve_game(t_board *board)
 {
-    int     size;
-    int     count;
-
-    count = board->nbr;
-    size = min_size(count * 4);
-    init_board(board, size);
-    printf("size = %d\n", size);
-    while (!check_solve(board, board->tetrs, size, count) && size <= 12)
-    {
-        size++;
-        init_board(board, size);    
-    }
-    printf("size = %d\n", size);
-    print_board(board, size);
-    ft_putstr("\n");
+	int     size;
+	int     count;
+	
+	count = board->nbr;
+	size = min_size(count * 4);
+	init_board(board, size);
+	printf("size = %d\n", size);
+	while (!check_solve(board, board->tetrs, size, count) && size <= 12)
+	{
+		size++;
+		init_board(board, size);    
+	}
+	printf("size = %d\n", size);
+	print_board(board, size);
+	ft_putstr("\n");
 }
