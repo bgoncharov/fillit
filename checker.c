@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   checker.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bogoncha <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/20 11:58:26 by bogoncha          #+#    #+#             */
+/*   Updated: 2019/03/20 11:58:30 by bogoncha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fillit.h"
 
 int		is_valid(int c, int i)
@@ -48,16 +60,12 @@ int		check_block(char *buf)
 		}
 		i++;
 	}
-	if (i >= 20 && !buf[i] && part == 4)
+	if (i >= 20 && !buf[i] && part == 4 && (res = check_tet(buf, start)))
 	{
-		res = check_tet(buf, start);
 		if (res == 6 || res == 8)
-		{
 			return (1);
-		}
 	}
 	else
 		ft_error();
 	return (0);
 }
-

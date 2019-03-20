@@ -37,7 +37,7 @@ void	get_param(t_term *tet, char *buf)
 	}
 }
 
-void	move_up(t_term *tet, int x)
+void	move_up(t_term *tet, int x, int y)
 {
 	tet->x = 0;
 	while (tet->x < 4 && x > 0)
@@ -54,6 +54,7 @@ void	move_up(t_term *tet, int x)
 		}
 		tet->x++;
 	}
+	move_left(tet, y);
 }
 
 void	move_left(t_term *tet, int y)
@@ -75,18 +76,8 @@ void	move_left(t_term *tet, int y)
 	}
 }
 
-void	find_coord(t_term *tet)
+void	find_coord(t_term *tet, int x, int y, int f1, int f2)
 {
-	int x;
-	int y;
-	int	f1;
-	int f2;
-
-	x = 0;
-	y = 0;
-	f1 = 0;
-	f2 = 0;
-	tet->x = 0;
 	while (tet->x < 4)
 	{
 		tet->y = 0;
@@ -111,8 +102,7 @@ void	find_coord(t_term *tet)
 		}
 		tet->x++;
 	}
-	move_up(tet, x);
-	move_left(tet, y);
+	move_up(tet, x, y);
 }
 
 t_term	*create_tet(char *buf)
@@ -141,23 +131,4 @@ t_term	*create_tet(char *buf)
 	}
 	c++;
 	return (tet);
-}
-
-void			pushback(t_board *board, t_term *tet)
-{
-	t_term		*new;
-
-	new = board->tetrs;
-	if (!new)
-	{
-		board->tetrs = tet;
-		board->nbr++;
-	}
-	else
-	{
-		while (new->next)
-			new = new->next;
-		new->next = tet;
-		board->nbr++;
-	}
 }

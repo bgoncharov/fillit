@@ -18,13 +18,41 @@ int		ft_error(void)
 	exit(0);
 }
 
+void	pushback(t_board *board, t_term *tet)
+{
+	t_term		*new;
+
+	new = board->tetrs;
+	if (!new)
+	{
+		board->tetrs = tet;
+		board->nbr++;
+	}
+	else
+	{
+		while (new->next)
+			new = new->next;
+		new->next = tet;
+		board->nbr++;
+	}
+}
+
 void	get_tet(t_board *board, char *buf)
 {
+	int		x;
+	int		y;
+	int		f1;
+	int		f2;
 	t_term	*tet;
 
+	x = 0;
+	y = 0;
+	f1 = 0;
+	f2 = 0;
 	tet = create_tet(buf);
 	get_param(tet, buf);
-	find_coord(tet);
+	tet->x = 0;
+	find_coord(tet, x, y, f1, f2);
 	pushback(board, tet);
 }
 
