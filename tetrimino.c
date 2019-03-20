@@ -81,6 +81,7 @@ void	find_coord(t_term *tet, int x, int y, int f1)
 	int f2;
 
 	f2 = 0;
+	tet->y = 0;
 	while (tet->y < 4)
 	{
 		tet->x = 0;
