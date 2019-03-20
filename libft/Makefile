@@ -6,7 +6,7 @@
 #    By: bogoncha <bogoncha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/17 18:48:40 by bogoncha          #+#    #+#              #
-#    Updated: 2019/02/22 22:32:25 by bogoncha         ###   ########.fr        #
+#    Updated: 2019/03/20 13:42:32 by bogoncha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,16 +47,16 @@ OBJ = ft_atoi.o ft_bzero.o ft_isalnum.o \
 INCLUDES=./
 
 $(NAME): $(SRCS) libft.h
-	gcc -Wall -Wextra -Werror -I $(INCLUDES) -c $(SRCS)
-	ar rc $(NAME) $(OBJ)
-	ranlib $(NAME)
+	@gcc -Wall -Wextra -Werror -I $(INCLUDES) -c $(SRCS)
+	@ar rc $(NAME) $(OBJ)
+	@ranlib $(NAME)
 
 all: $(NAME)
 
 clean:
-	/bin/rm -f $(OBJ)
+	@/bin/rm -f $(OBJ)
 
 fclean: clean
-	/bin/rm -f $(NAME)
+	@/bin/rm -f $(NAME)
 
 re: fclean all
