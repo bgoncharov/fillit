@@ -14,8 +14,8 @@
 
 int		ft_error(void)
 {
-	ft_putstr("Error\n");
-	exit(0);
+	ft_putstr("error\n");
+	exit(1);
 }
 
 void	pushback(t_board *board, t_term *tet)
@@ -49,7 +49,6 @@ void	get_tet(t_board *board, char *buf)
 	f1 = 0;
 	tet = create_tet(buf);
 	get_param(tet, buf);
-	tet->x = 0;
 	find_coord(tet, x, y, f1);
 	pushback(board, tet);
 }
@@ -61,16 +60,16 @@ int		read_file(char *file, int fd, t_board *board)
 	int		lastret;
 	char	buf[22];
 
-	i = -1;
+	i = 1;
 	ret = 0;
 	lastret = 0;
 	if ((fd = open(file, O_RDONLY)) < 0)
 		ft_error();
-	while ((ret = read(fd, buf, 21)) >= 20)
+	while ((ret = read(fd, buf, 21)) > 0)
 	{
 		lastret = ret;
 		buf[ret] = '\0';
-		if (ret >= 20 && check_block(buf) && i < 26)
+		if (ret >= 20 && check_block(buf) && i <= 26)
 		{
 			i++;
 			get_tet(board, buf);
@@ -85,20 +84,20 @@ int		read_file(char *file, int fd, t_board *board)
 
 int		main(int argc, char **argv)
 {
+	int		fd;
+	t_board board;
+
 	if (argc == 2)
 	{
-		int		fd;
-		t_board board;
-
 		board.tetrs = NULL;
 		board.nbr = 0;
 		fd = 0;
 		if (read_file(argv[1], fd, &board))
 			solve_game(&board);
 		else
-			ft_putstr("Error\n");
-		return (0);
+			ft_putstr("error\n");
 	}
-	ft_putstr("usage: ./fillit [file_name]\n");
+	else
+		ft_putstr("usage: ./fillit [file_name]\n");
 	return (0);
 }

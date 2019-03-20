@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "fillit.h"
-#include <stdio.h>
 
 int		min_size(int count)
 {
@@ -45,17 +44,17 @@ void	init_board(t_board *board, int size)
 
 void	print_board(t_board *board, int size)
 {
+	int		i;
 	int		j;
-	int		k;
 
 	j = 0;
 	while (j < size)
 	{
-		k = 0;
-		while (k <= size)
+		i = 0;
+		while (i <= size)
 		{
-			ft_putchar(board->s[j][k]);
-			k++;
+			ft_putchar(board->s[j][i]);
+			i++;
 		}
 		j++;
 	}
