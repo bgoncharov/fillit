@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kdenisov <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: bogoncha <bogoncha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/20 10:39:47 by kdenisov          #+#    #+#             */
-/*   Updated: 2019/03/20 10:39:53 by kdenisov         ###   ########.fr       */
+/*   Updated: 2019/03/20 15:31:47 by bogoncha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,20 +87,20 @@ int		read_file(char *file, int fd, t_board *board)
 
 int		main(int argc, char **argv)
 {
-	int		fd;
-	t_board board;
-
-	board.tetrs = NULL;
-	board.nbr = 0;
-	fd = 0;
-	if (argc != 2)
+	if (argc == 2)
 	{
-		printf("error in main\n");
+		int		fd;
+		t_board board;
+
+		board.tetrs = NULL;
+		board.nbr = 0;
+		fd = 0;
+		if (read_file(argv[1], fd, &board))
+			solve_game(&board);
+		else
+			ft_putstr("Error\n");
 		return (0);
 	}
-	if (read_file(argv[1], fd, &board))
-		solve_game(&board);
-	else
-		ft_putstr("Error\n");
+	ft_putstr("usage: ./fillit [file_name]\n");
 	return (0);
 }

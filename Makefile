@@ -4,12 +4,12 @@ FLAGS = -Wall -Werror -Wextra
 
 SRC = main.c board.c checker.c fillit.c tetrimino.c
 
-OBJS = *.o
+OBJS = main.o board.o checker.o fillit.o tetrimino.o
 
 all: $(NAME)
 
 $(NAME): lib
-	gcc $(FLAGS) -o $(NAME) -I./libft -L./libft -lft -o fillit $(SRC)
+	gcc $(FLAGS) -o $(NAME) -I./libft -L./libft -lft $(SRC)
 
 lib:
 	@make -C libft
