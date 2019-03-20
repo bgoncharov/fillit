@@ -46,7 +46,7 @@ int					check_tet(char *buf, int i);
 int					check_block(char *buf);
 void				get_tet(t_board *board, char *buf);
 void				get_param(t_term	*tet, char *buf);
-void				find_coord(t_term	*tet, int x, int y, int f1, int f2);
+void				find_coord(t_term	*tet, int x, int y, int f1);
 void				move_up(t_term *tet, int x, int y);
 void				move_left(t_term *tet, int y);
 t_term				*create_tet(char *buf);

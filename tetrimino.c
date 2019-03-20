@@ -76,8 +76,11 @@ void	move_left(t_term *tet, int y)
 	}
 }
 
-void	find_coord(t_term *tet, int x, int y, int f1, int f2)
+void	find_coord(t_term *tet, int x, int y, int f1)
 {
+	int f2;
+
+	f2 = 0;
 	while (tet->x < 4)
 	{
 		tet->y = 0;
@@ -85,16 +88,12 @@ void	find_coord(t_term *tet, int x, int y, int f1, int f2)
 		{
 			if (tet->line[tet->x][tet->y] != '.')
 			{
+				x = (tet->x >= x && f1 == 0) ? tet->x : x;
 				if (tet->x >= x && f1 == 0)
-				{
-					x = tet->x;
 					f1++;
-				}
+				y = (tet->y >= y && f2 == 0) ? tet->y : y;
 				if (tet->y >= y && f2 == 0)
-				{
-					y = tet->y;
 					f2++;
-				}
 				if (f2 != 0 && tet->y < y)
 					y = tet->y;
 			}
