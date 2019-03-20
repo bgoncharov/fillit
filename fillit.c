@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fillit.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bogoncha <bogoncha@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/20 10:49:03 by bogoncha          #+#    #+#             */
+/*   Updated: 2019/03/20 10:54:42 by bogoncha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fillit.h"
 #include <stdio.h>
 
@@ -42,7 +54,7 @@ int			place(t_board *board, t_term *tet)
 	return (1);
 }
 
-int			check_solve(t_board *board, t_term *tet, int size, int count)
+int			check_solve(t_board *board, t_term *tet, int size)
 {
 	tet->y = 0;
 	while (tet->y < size)
@@ -54,7 +66,7 @@ int			check_solve(t_board *board, t_term *tet, int size, int count)
 			{
 				if (!tet->next)
 					return (1);
-				if (tet->next && check_solve(board, tet->next, size, count))
+				if (tet->next && check_solve(board, tet->next, size))
 					return (1);
 				else
 					set_piece(board, tet, '.');
@@ -69,13 +81,11 @@ int			check_solve(t_board *board, t_term *tet, int size, int count)
 void		solve_game(t_board *board)
 {
 	int		size;
-	int		count;
 
-	count = board->nbr;
-	size = min_size(count * 4);
+	size = min_size(board->nbr * 4);
 	init_board(board, size);
 	printf("size = %d\n", size);
-	while (!check_solve(board, board->tetrs, size, count) && size <= 12)
+	while (!check_solve(board, board->tetrs, size) && size <= 12)
 	{
 		size++;
 		init_board(board, size);

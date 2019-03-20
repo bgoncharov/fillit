@@ -41,6 +41,6 @@ void	pushback(t_board *board, t_term *tet);
 int		read_file(char *file, int fd);
 void	set_piece(t_board *board, t_term *tet, char c);
 int		place(t_board *board, t_term *tet);
-int		check_solve(t_board *board, t_term *tet, int size, int count);
+int		check_solve(t_board *board, t_term *tet, int size);
 
 #endif
