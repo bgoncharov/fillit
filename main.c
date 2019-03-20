@@ -6,7 +6,7 @@
 /*   By: bogoncha <bogoncha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/20 10:39:47 by kdenisov          #+#    #+#             */
-/*   Updated: 2019/03/20 15:31:47 by bogoncha         ###   ########.fr       */
+/*   Updated: 2019/03/20 15:39:09 by bogoncha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,15 @@ void	get_tet(t_board *board, char *buf)
 	int		x;
 	int		y;
 	int		f1;
-	int		f2;
 	t_term	*tet;
 
 	x = 0;
 	y = 0;
 	f1 = 0;
-	f2 = 0;
 	tet = create_tet(buf);
 	get_param(tet, buf);
 	tet->x = 0;
-	find_coord(tet, x, y, f1, f2);
+	find_coord(tet, x, y, f1);
 	pushback(board, tet);
 }
 
@@ -61,7 +59,7 @@ int		read_file(char *file, int fd, t_board *board)
 	int		i;
 	int		ret;
 	int		lastret;
-	char	buf[255];
+	char	buf[22];
 
 	i = -1;
 	ret = 0;
