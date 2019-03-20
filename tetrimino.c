@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   tetrimino.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kdenisov <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: bogoncha <bogoncha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 16:09:02 by kdenisov          #+#    #+#             */
-/*   Updated: 2019/03/19 16:09:09 by kdenisov         ###   ########.fr       */
+/*   Updated: 2019/03/20 00:00:05 by bogoncha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-void		get_param(t_term	*tet, char *buf)
+void	get_param(t_term *tet, char *buf)
 {
 	int	j;
 	int	k;
@@ -31,13 +31,13 @@ void		get_param(t_term	*tet, char *buf)
 	while (k < 19)
 	{
 		if (buf[k] == '#' || buf[k + 1] == '#' ||\
-                buf[k + 2] == '#' || buf[k + 3] == '#')
+		buf[k + 2] == '#' || buf[k + 3] == '#')
 			tet->height++;
 		k = k + 5;
 	}
 }
 
-void	move_tet(t_term	*tet)
+void	move_tet(t_term *tet)
 {
 	int x;
 	int y;

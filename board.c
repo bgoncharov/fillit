@@ -15,7 +15,7 @@ void	init_board(t_board *board, int size)
 {
 	int		i;
 	int		j;
-	
+
 	j = 0;
 	while (j < size)
 	{
@@ -35,7 +35,7 @@ void	print_board(t_board *board, int size)
 {
 	int		j;
 	int		k;
-	
+
 	j = 0;
 	while (j < size)
 	{
