@@ -12,14 +12,14 @@ $(NAME): lib
 	gcc $(FLAGS) -o $(NAME) -I./libft -L./libft -lft -o fillit $(SRC)
 
 lib:
-	make -C libft
+	@make -C libft
 
 clean:
-	/bin/rm -rf $(OBJS)
-	make -C libft/ clean
+	@/bin/rm -rf $(OBJS)
+	@make -C libft/ clean
 
 fclean: clean
-	/bin/rm -rf $(NAME)
-	make -C libft/ fclean
+	@/bin/rm -rf $(NAME)
+	@make -C libft/ fclean
 
 re: fclean all
