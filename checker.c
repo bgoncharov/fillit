@@ -48,10 +48,14 @@ int		check_block(char *buf)
 		}
 		i++;
 	}
-	if (i >= 20 && !buf[i] && part == 4
-		&& (res = check_tet(buf, start))
-		&& (res == 6 || res == 8))
-		return (1);
+	if (i >= 20 && !buf[i] && part == 4)
+	{
+		res = check_tet(buf, start);
+		if (res == 6 || res == 8)
+		{
+			return (1);
+		}
+	}
 	else
 		ft_putstr("Error\n");
 	return (0);
