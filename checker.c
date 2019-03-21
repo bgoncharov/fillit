@@ -24,8 +24,8 @@ int		check_tet(char *buf, int i)
 {
 	int		count;
 
-	/*if (i == 19)
-		return (0);*/
+	if (i == 19)
+		return (0);
 	count = 0;
 	if (buf[i] == '#')
 	{
