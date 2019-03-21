@@ -24,8 +24,8 @@ int		check_tet(char *buf, int i)
 {
 	int		count;
 
-	if (i == 19)
-		return (0);
+	/*if (i == 19)
+		return (0);*/
 	count = 0;
 	if (buf[i] == '#')
 	{
@@ -41,7 +41,7 @@ int		check_tet(char *buf, int i)
 	return (count + check_tet(buf, ++i));
 }
 
-int		check_block(char *buf)
+int		check_buf(char *buf)
 {
 	int		i;
 	int		part;

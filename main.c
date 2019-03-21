@@ -69,7 +69,7 @@ int		read_file(char *file, int fd, t_board *board)
 	{
 		last = ret;
 		buf[ret] = '\0';
-		if (ret >= 20 && check_block(buf) && i <= 26)
+		if (ret >= 20 && check_buf(buf) && i <= 26)
 		{
 			i++;
 			get_tet(board, buf);
