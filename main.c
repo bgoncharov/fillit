@@ -57,17 +57,17 @@ int		read_file(char *file, int fd, t_board *board)
 {
 	int		i;
 	int		ret;
-	int		lastret;
+	int		last;
 	char	buf[22];
 
 	i = 1;
 	ret = 0;
-	lastret = 0;
+	last = 0;
 	if ((fd = open(file, O_RDONLY)) < 0)
 		ft_error();
 	while ((ret = read(fd, buf, 21)) > 0)
 	{
-		lastret = ret;
+		last = ret;
 		buf[ret] = '\0';
 		if (ret >= 20 && check_block(buf) && i <= 26)
 		{
@@ -77,7 +77,7 @@ int		read_file(char *file, int fd, t_board *board)
 		else
 			ft_error();
 	}
-	if (ret <= 0 && (lastret == 21 || !lastret))
+	if (ret <= 0 && (last == 21 || !last))
 		ft_error();
 	return (1);
 }
