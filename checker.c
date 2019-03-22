@@ -41,7 +41,7 @@ int		check_tet(char *buf, int i)
 	return (count + check_tet(buf, ++i));
 }
 
-int		check_block(char *buf)
+int		check_buf(char *buf)
 {
 	int		i;
 	int		part;
