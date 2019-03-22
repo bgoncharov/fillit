@@ -13,3 +13,4 @@ Now test it with:
 ```
 ./fillit tests/[test_file]
 ```
+Useful link: https://medium.com/@bethnenniger/fillit-solving-for-the-smallest-square-of-tetrominos-c6316004f909
