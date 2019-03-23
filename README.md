@@ -3,6 +3,8 @@ Fillit is a project that let you discover and/or familiarize yourself with a rec
 
 ![Hercules-42](https://github.com/bgoncharov/fillit/blob/master/fillit.png)
 
+Useful link: https://medium.com/@bethnenniger/fillit-solving-for-the-smallest-square-of-tetrominos-c6316004f909
+
 # How to use
 First of all, download/clone this repo:
 ```
@@ -16,5 +18,6 @@ Now test it with:
 ```
 ./fillit tests/[test_file]
 ```
-
-Useful link: https://medium.com/@bethnenniger/fillit-solving-for-the-smallest-square-of-tetrominos-c6316004f909
+Authors
+https://github.com/nimfa27
+https://github.com/bgoncharov
