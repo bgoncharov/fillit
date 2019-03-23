@@ -18,6 +18,3 @@ Now test it with:
 ```
 ./fillit tests/[test_file]
 ```
-Authors
-https://github.com/nimfa27
-https://github.com/bgoncharov
