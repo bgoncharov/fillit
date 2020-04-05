@@ -19,3 +19,6 @@ Now test it with:
 ./fillit tests/[test_file]
 ```
 ![Fill it!](https://github.com/bgoncharov/fillit/blob/master/resource/42sv_small.png)
+
+# Authors
+[Kseniia Denisova](https://github.com/kdenisova) and [Boris Goncharov](https://github.com/bgoncharov)
