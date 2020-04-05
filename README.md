@@ -5,7 +5,7 @@ Fillit is a project that let you discover and/or familiarize yourself with a rec
 
 Useful link: https://medium.com/@bethnenniger/fillit-solving-for-the-smallest-square-of-tetrominos-c6316004f909
 
-# How to use
+## How to use
 First of all, download/clone this repo:
 ```
 https://github.com/bgoncharov/fillit.git
@@ -20,5 +20,5 @@ Now test it with:
 ```
 ![Fill it!](https://github.com/bgoncharov/fillit/blob/master/resource/42sv_small.png)
 
-# Authors
+## Authors
 [Kseniia Denisova](https://github.com/kdenisova) and [Boris Goncharov](https://github.com/bgoncharov)
