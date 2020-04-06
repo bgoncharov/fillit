@@ -21,4 +21,4 @@ Now test it with:
 ![Fill it!](https://github.com/bgoncharov/fillit/blob/master/resource/42sv_small.png)
 
 ## Authors
-[Kseniia Denisova](https://github.com/kdenisova) and [Boris Goncharov](https://github.com/bgoncharov)
+[Kseniia Denisova](https://github.com/kdenisova) and [Boris Goncharov](https://github.com/bgoncharov) @ 42 Silicon Valley
